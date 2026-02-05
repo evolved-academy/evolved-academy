@@ -4,6 +4,12 @@ import PromptCarousel from '../components/PromptCarousel';
 const AIPromptsPage = () => {
     const prompts = [
         {
+            resultTitle: 'Cinematic Digital Portrait',
+            promptText: 'A high-contrast digital illustration of me. The background is a dramatic, moody deep red with smoky, atmospheric textures. The art style is a blend of GTA-inspired vector art and cinematic digital painting, featuring sharp outlines, rich color saturation, and dramatic rim lighting.',
+            resultColor: '#6e0d0d', // Fallback color
+            resultImage: '/assets/user-portrait.jpg' // Path to be created
+        },
+        {
             resultTitle: 'Futuristic Eco City',
             promptText: 'A futuristic eco-friendly city with vertical gardens, flying cars, and golden sunlight, photorealistic 8k',
             resultColor: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)'
@@ -41,6 +47,7 @@ const AIPromptsPage = () => {
                         resultTitle={item.resultTitle}
                         promptText={item.promptText}
                         resultColor={item.resultColor}
+                        resultImage={item.resultImage}
                     />
                 ))}
             </div>

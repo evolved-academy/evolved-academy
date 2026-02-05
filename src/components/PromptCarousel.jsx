@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Terminal, Image as ImageIcon } from 'lucide-react';
 
-const PromptCarousel = ({ resultTitle, promptText, resultColor, promptColor }) => {
+const PromptCarousel = ({ resultTitle, promptText, resultColor, promptColor, resultImage }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const nextSlide = () => {
@@ -30,7 +30,7 @@ const PromptCarousel = ({ resultTitle, promptText, resultColor, promptColor }) =
                 transform: `translateX(-${currentIndex * 50}%)`,
                 transition: 'transform 0.5s ease-in-out'
             }}>
-                {/* Slide 1: Result Image (Placeholder) */}
+                {/* Slide 1: Result Image */}
                 <div style={{
                     width: '50%',
                     height: '100%',
@@ -40,12 +40,36 @@ const PromptCarousel = ({ resultTitle, promptText, resultColor, promptColor }) =
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: 'white',
-                    padding: '2rem',
-                    textAlign: 'center'
+                    padding: resultImage ? '0' : '2rem',
+                    textAlign: 'center',
+                    position: 'relative'
                 }}>
-                    <ImageIcon size={48} style={{ marginBottom: '1rem', opacity: 0.8 }} />
-                    <h3 style={{ fontSize: '1.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>{resultTitle}</h3>
-                    <div style={{ marginTop: '1rem', fontSize: '0.8rem', opacity: 0.7 }}>Result Image</div>
+                    {resultImage ? (
+                        <>
+                            <img
+                                src={resultImage}
+                                alt={resultTitle}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                            <div style={{
+                                position: 'absolute',
+                                bottom: 0,
+                                left: 0,
+                                width: '100%',
+                                padding: '10px',
+                                background: 'rgba(0,0,0,0.6)',
+                                color: 'white'
+                            }}>
+                                <h3 style={{ fontSize: '1.2rem', margin: 0 }}>{resultTitle}</h3>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <ImageIcon size={48} style={{ marginBottom: '1rem', opacity: 0.8 }} />
+                            <h3 style={{ fontSize: '1.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>{resultTitle}</h3>
+                            <div style={{ marginTop: '1rem', fontSize: '0.8rem', opacity: 0.7 }}>Result Image</div>
+                        </>
+                    )}
                 </div>
 
                 {/* Slide 2: Prompt Image (Terminal Style) */}
