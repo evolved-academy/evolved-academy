@@ -23,7 +23,7 @@ const RegisterPage = () => {
     };
 
     return (
-        <div className="container" style={{ padding: '4rem 0' }}>
+        <div className="container" style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
                 <h1 style={{ fontSize: '2.5rem', color: 'var(--color-primary)', marginBottom: '1rem' }}>
                     Invest in Your Evolution... One Pass, Unlimited Access!

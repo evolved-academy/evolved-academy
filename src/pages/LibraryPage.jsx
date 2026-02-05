@@ -12,7 +12,7 @@ const ResourceList = () => {
     }));
 
     return (
-        <div className="container" style={{ padding: '2rem 0' }}>
+        <div className="container" style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
             <h2 style={{ color: 'var(--color-primary)' }}>{title}</h2>
             <CourseGrid items={resources} type="resource" />
         </div>
@@ -24,7 +24,7 @@ const LibraryPage = () => {
         <Routes>
             <Route path=":category" element={<ResourceList />} />
             <Route path="/" element={
-                <div className="container" style={{ padding: '4rem 0', textAlign: 'center' }}>
+                <div className="container" style={{ paddingTop: '4rem', paddingBottom: '4rem', textAlign: 'center' }}>
                     <h2>Select a category to view resources</h2>
                 </div>
             } />

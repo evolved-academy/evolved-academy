@@ -49,7 +49,7 @@ const VideoGallery = ({ board: propBoard }) => {
     const videos = getVideoData();
 
     return (
-        <div className="container" style={{ padding: '2rem 0' }}>
+        <div className="container" style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
             <h2 style={{ color: 'var(--color-primary)', marginBottom: '1rem' }}>{title}</h2>
             <CourseGrid items={videos} type="video" />
         </div>
@@ -62,7 +62,7 @@ const AcademicsPage = () => {
             <Route path="cbse/:subject" element={<VideoGallery board="cbse" />} />
             <Route path="state/:state/:subject" element={<VideoGallery />} />
             <Route path="/" element={
-                <div className="container" style={{ padding: '4rem 0', textAlign: 'center' }}>
+                <div className="container" style={{ paddingTop: '4rem', paddingBottom: '4rem', textAlign: 'center' }}>
                     <h2>Select a Board and Subject from the menu</h2>
                 </div>
             } />

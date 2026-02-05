@@ -11,7 +11,7 @@ const FreeCourses = () => {
         { title: 'Data Science 101', description: 'Introduction to data analysis.' },
     ];
     return (
-        <div className="container" style={{ padding: '2rem 0' }}>
+        <div className="container" style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
             <h2 style={{ color: 'var(--color-primary)' }}>Free Tech Courses</h2>
             <CourseGrid items={courses} type="video" />
         </div>
@@ -25,7 +25,7 @@ const PaidCourses = () => {
         { title: 'Cloud Computing', description: 'AWS and Azure certification prep.', price: '$129' },
     ];
     return (
-        <div className="container" style={{ padding: '2rem 0' }}>
+        <div className="container" style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
             <h2 style={{ color: 'var(--color-primary)' }}>Premium Tech Courses</h2>
             <CourseGrid items={courses} type="paid" />
         </div>
