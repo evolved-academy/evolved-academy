@@ -233,3 +233,45 @@
         width: 100%;
     }
 }
+/* Mobile Dropdown Overrides */
+@media (max-width: 768px) {
+    .mobile-menu .dropdown-menu {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+        background-color: var(--color-surface);
+        padding: 0;
+        min-width: unset;
+    }
+
+    .mobile-menu .dropdown-column {
+        padding: 0.5rem 1rem;
+    }
+
+    .mobile-menu .nested-dropdown-trigger {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.5rem 0;
+    }
+
+    .mobile-menu .nested-dropdown {
+        display: flex; /* Always show nested items on mobile for simplicity, or we add another toggle */
+        position: relative;
+        top: auto;
+        left: auto;
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        padding-left: 1rem;
+        background: none;
+    }
+    
+    /* Ensure nested dropdowns are visible without hover on mobile */
+    .mobile-menu .nested-dropdown-trigger .nested-dropdown {
+        display: flex;
+    }
+}
+

@@ -20,6 +20,12 @@ const Navbar = () => {
         setIsMobileMenuOpen(false);
     };
 
+    // Close mobile menu when route changes (for links inside dropdowns)
+    React.useEffect(() => {
+        setIsMobileMenuOpen(false);
+        setActiveDropdown(null);
+    }, [navigate]);
+
     const handleMouseEnter = (name) => {
         if (isAuthenticated) setActiveDropdown(name);
     };
@@ -147,18 +153,43 @@ const Navbar = () => {
             {isMobileMenuOpen && (
                 <div className="mobile-menu">
                     {navLinks.map((link) => (
-                        <div key={link.name}>
-                            <button
-                                onClick={() => handleNavClick(link.path)}
-                                className="mobile-nav-link"
-                            >
-                                {link.name}
-                            </button>
+                        <div key={link.name} className="mobile-nav-item">
+                            {['Academics', 'Tech Skills', 'Non-Tech Skills', 'Library'].includes(link.name) ? (
+                                <>
+                                    <button
+                                        onClick={() => setActiveDropdown(activeDropdown === link.name ? null : link.name)}
+                                        className="mobile-nav-link"
+                                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                                    >
+                                        {link.name}
+                                        <ChevronDown size={16} style={{
+                                            transform: activeDropdown === link.name ? 'rotate(180deg)' : 'rotate(0deg)',
+                                            transition: 'transform 0.2s'
+                                        }} />
+                                    </button>
+                                    {activeDropdown === link.name && (
+                                        <div className="mobile-dropdown-content">
+                                            {/* Reuse renderDropdown logic but we might need to adjust styles or structure. 
+                                                Since renderDropdown returns a specific structure, we might need a mobile-specific render 
+                                                OR we rely on CSS to reset the absolute positioning for .dropdown-menu when inside .mobile-menu */}
+                                            {renderDropdown(link.name)}
+                                        </div>
+                                    )}
+                                </>
+                            ) : (
+                                <button
+                                    onClick={() => handleNavClick(link.path)}
+                                    className="mobile-nav-link"
+                                >
+                                    {link.name}
+                                </button>
+                            )}
                         </div>
                     ))}
                     <div className="mobile-auth">
                         {isAuthenticated ? (
                             <button onClick={logout} className="btn btn-outline w-full">
+                                <LogOut size={18} style={{ marginRight: '8px' }} />
                                 Log Out
                             </button>
                         ) : (
