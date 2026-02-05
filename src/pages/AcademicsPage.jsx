@@ -9,9 +9,11 @@ const VideoGallery = ({ board: propBoard }) => {
     // For state board, we rely on 'state' param being present to determine title.
     const board = propBoard || params.board;
 
+    const formatSubject = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+
     const title = state
-        ? `${state.toUpperCase()} Board - ${subject}`
-        : `${board ? board.toUpperCase() : 'Board'} - ${subject}`;
+        ? `${state.toUpperCase()} Board - ${formatSubject(subject)}`
+        : `${board ? board.toUpperCase() : 'Board'} - ${formatSubject(subject)}`;
 
     // Mock data with specific YouTube videos for CBSE
     const getVideoData = () => {
