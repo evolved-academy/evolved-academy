@@ -51,28 +51,32 @@ const Navbar = () => {
             return (
                 <div className="dropdown-menu">
                     <div className="dropdown-column">
-                        <h4>CBSE</h4>
-                        <Link to="/academics/cbse/science">Science</Link>
-                        <Link to="/academics/cbse/maths">Maths</Link>
+                        <h4>CBSE</h4>{/* Updated to Class structure */}
+                        {['8th', '9th', '10th'].map(cls => (
+                            <div key={cls} className="nested-dropdown-trigger">
+                                <span>Class {cls}</span>
+                                <div className="nested-dropdown">
+                                    <Link to={`/academics/cbse/${cls}/maths`}>Maths</Link>
+                                    <Link to={`/academics/cbse/${cls}/science`}>Science</Link>
+                                    <Link to={`/academics/cbse/${cls}/history`}>History Civics</Link>
+                                    <Link to={`/academics/cbse/${cls}/geography`}>Geography</Link>
+                                    <Link to={`/academics/cbse/${cls}/english`}>English</Link>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                     <div className="dropdown-column">
                         <h4>State Board</h4>
                         <div className="nested-dropdown-trigger">
                             <span>Maharashtra</span>
                             <div className="nested-dropdown">
-                                <Link to="/academics/state/mh/maths">Maths</Link>
-                                <Link to="/academics/state/mh/science">Science</Link>
-                                <Link to="/academics/state/mh/history">History Civics</Link>
-                                <Link to="/academics/state/mh/geography">Geography</Link>
+                                <Link to="/academics/state/mh">View Classes</Link>
                             </div>
                         </div>
                         <div className="nested-dropdown-trigger">
                             <span>Gujarat</span>
                             <div className="nested-dropdown">
-                                <Link to="/academics/state/gj/maths">Maths</Link>
-                                <Link to="/academics/state/gj/science">Science</Link>
-                                <Link to="/academics/state/gj/history">History Civics</Link>
-                                <Link to="/academics/state/gj/geography">Geography</Link>
+                                <Link to="/academics/state/gj">View Classes</Link>
                             </div>
                         </div>
                     </div>
