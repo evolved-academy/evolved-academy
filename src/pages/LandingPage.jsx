@@ -1,0 +1,41 @@
+import React from 'react';
+import Hero from '../components/Hero';
+
+const LandingPage = () => {
+    return (
+        <div className="landing-page">
+            <Hero />
+            {/* Additional sections can be added here */}
+            <section className="container" style={{ padding: '4rem 1.5rem', textAlign: 'center' }}>
+                <h2 style={{ fontSize: '2.5rem', color: 'var(--color-primary)', marginBottom: '1rem' }}>
+                    Unlock Your Potential
+                </h2>
+                <p style={{ fontSize: '1.2rem', color: 'var(--color-text-light)', maxWidth: '700px', margin: '0 auto' }}>
+                    Whether you're looking to master academic subjects, learn cutting-edge tech skills, or develop essential soft skills, EvolvEd Academy is your partner in lifelong learning.
+                </p>
+            </section>
+
+            {/* Free Courses Section */}
+            <section className="container" style={{ padding: '4rem 1.5rem', backgroundColor: 'var(--color-bg-secondary)', borderRadius: '1rem', marginTop: '2rem' }}>
+                <h2 style={{ fontSize: '2.5rem', color: 'var(--color-primary)', marginBottom: '2rem', textAlign: 'center' }}>
+                    Free Courses
+                </h2>
+                <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+                    <h3 style={{ fontSize: '1.8rem', color: 'var(--color-text)', marginBottom: '0.5rem' }}>Top AI Tools For Study</h3>
+                    <p style={{ fontSize: '1.1rem', color: 'var(--color-text-light)', marginBottom: '1.5rem' }}>Top In Your Class With AI!</p>
+                    <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '0.5rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' }}>
+                        <iframe
+                            src="https://www.youtube.com/embed/TQ7jr79LAkc?si=KwXDNr1BNvb3kJUr"
+                            title="YouTube video player"
+                            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowFullScreen
+                        ></iframe>
+                    </div>
+                </div>
+            </section>
+        </div>
+    );
+};
+
+export default LandingPage;

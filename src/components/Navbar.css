@@ -1,0 +1,235 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    /* Left, Center, Right */
+    align-items: center;
+    width: 100%;
+    /* gap: 1.5rem; Removed to let grid handle spacing */
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    justify-self: start;
+    /* Pin logo to the left */
+}
+
+/* ... existing code ... */
+
+.navbar-auth {
+    display: flex;
+    justify-content: flex-end;
+    justify-self: end;
+    /* Pin auth to the right */
+}
+
+.logo-icon {
+    font-size: 2rem;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    /* Removed flex: 1 as grid handles centering now */
+}
+
+.nav-item {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text);
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.nav-link:hover {
+    color: var(--color-primary);
+    background-color: #e6e9e9;
+    font-size: 1rem;
+}
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--color-text);
+}
+
+/* Dropdown Styles */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-sm);
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    z-index: 1001;
+    animation: fadeIn 0.2s ease;
+}
+
+.dropdown-menu a {
+    padding: 0.5rem 1rem;
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s;
+    font-size: 0.95rem;
+}
+
+.dropdown-menu a:hover {
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+}
+
+.dropdown-column {
+    padding: var(--spacing-sm);
+}
+
+.dropdown-column h4 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: 0.5px;
+}
+
+.navbar-auth {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Nested Dropdown */
+.nested-dropdown-trigger {
+    position: relative;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: var(--radius-sm);
+}
+
+.nested-dropdown-trigger:hover {
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+}
+
+.nested-dropdown {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    min-width: 180px;
+    padding: var(--spacing-sm);
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.nested-dropdown-trigger:hover .nested-dropdown {
+    display: flex;
+}
+
+.nested-dropdown a {
+    padding: 0.5rem 1rem;
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s;
+}
+
+.nested-dropdown a:hover {
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .mobile-menu {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        border-bottom: 1px solid var(--color-border);
+        padding: var(--spacing-md);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        box-shadow: var(--shadow-md);
+    }
+
+    .mobile-nav-link {
+        background: none;
+        border: none;
+        text-align: left;
+        padding: var(--spacing-sm);
+        font-size: 1.1rem;
+        color: var(--color-text);
+    }
+
+    .w-full {
+        width: 100%;
+    }
+}

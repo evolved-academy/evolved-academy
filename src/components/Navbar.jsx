@@ -1,0 +1,176 @@
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { Menu, X, ChevronDown, LogOut } from 'lucide-react';
+import logo from '../assets/logo.png';
+import './Navbar.css';
+
+const Navbar = () => {
+    const { isAuthenticated, user, logout } = useAuth();
+    const navigate = useNavigate();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [activeDropdown, setActiveDropdown] = useState(null);
+
+    const handleNavClick = (path) => {
+        if (!isAuthenticated) {
+            navigate('/login');
+        } else {
+            navigate(path);
+        }
+        setIsMobileMenuOpen(false);
+    };
+
+    const handleMouseEnter = (name) => {
+        if (isAuthenticated) setActiveDropdown(name);
+    };
+
+    const handleMouseLeave = () => {
+        setActiveDropdown(null);
+    };
+
+    const navLinks = [
+        { name: 'Academics', path: '/academics' },
+        { name: 'Tech Skills', path: '/tech-skills' },
+        { name: 'Non-Tech Skills', path: '/non-tech-skills' },
+        { name: 'Library', path: '/library' },
+        { name: 'Certifications', path: '/certifications' },
+        { name: 'AI Prompts', path: '/ai-prompts' },
+        // Only show Control Panel to editors/admins
+        ...(user?.role === 'editor' || user?.role === 'admin' ? [{ name: 'Control Panel', path: '/admin' }] : []),
+        { name: 'Register Forever', path: '/register' },
+    ];
+
+    const renderDropdown = (linkName) => {
+        if (linkName === 'Academics') {
+            return (
+                <div className="dropdown-menu">
+                    <div className="dropdown-column">
+                        <h4>CBSE</h4>
+                        <Link to="/academics/cbse/science">Science</Link>
+                        <Link to="/academics/cbse/maths">Maths</Link>
+                    </div>
+                    <div className="dropdown-column">
+                        <h4>State Board</h4>
+                        <div className="nested-dropdown-trigger">
+                            <span>Maharashtra</span>
+                            <div className="nested-dropdown">
+                                <Link to="/academics/state/mh/maths">Maths</Link>
+                                <Link to="/academics/state/mh/science">Science</Link>
+                                <Link to="/academics/state/mh/history">History Civics</Link>
+                                <Link to="/academics/state/mh/geography">Geography</Link>
+                            </div>
+                        </div>
+                        <div className="nested-dropdown-trigger">
+                            <span>Gujarat</span>
+                            <div className="nested-dropdown">
+                                <Link to="/academics/state/gj/maths">Maths</Link>
+                                <Link to="/academics/state/gj/science">Science</Link>
+                                <Link to="/academics/state/gj/history">History Civics</Link>
+                                <Link to="/academics/state/gj/geography">Geography</Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        if (linkName === 'Tech Skills' || linkName === 'Non-Tech Skills') {
+            const basePath = linkName === 'Tech Skills' ? '/tech-skills' : '/non-tech-skills';
+            return (
+                <div className="dropdown-menu">
+                    <Link to={`${basePath}/free`}>Free Courses</Link>
+                    <Link to={`${basePath}/paid`}>Paid Courses</Link>
+                </div>
+            );
+        }
+        if (linkName === 'Library') {
+            return (
+                <div className="dropdown-menu">
+                    <Link to="/library/academics">Academics</Link>
+                    <Link to="/library/tech">Tech Skills</Link>
+                    <Link to="/library/non-tech">Non-Tech Skills</Link>
+                </div>
+            );
+        }
+        return null;
+    };
+
+    return (
+        <nav className="navbar">
+            <div className="container navbar-container">
+                <Link to="/" className="navbar-logo">
+                    <img src={logo} alt="EvolvEd Academy" style={{ height: '50px' }} />
+                </Link>
+
+                <div className="navbar-links desktop-only">
+                    {navLinks.map((link) => (
+                        <div
+                            key={link.name}
+                            className="nav-item"
+                            onMouseEnter={() => handleMouseEnter(link.name)}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <button
+                                onClick={() => handleNavClick(link.path)}
+                                className="nav-link"
+                            >
+                                {link.name}
+                                {['Academics', 'Tech Skills', 'Non-Tech Skills', 'Library'].includes(link.name) && isAuthenticated && (
+                                    <ChevronDown size={14} style={{ marginLeft: '4px' }} />
+                                )}
+                            </button>
+                            {isAuthenticated && activeDropdown === link.name && renderDropdown(link.name)}
+                        </div>
+                    ))}
+                </div>
+
+                <div className="navbar-auth desktop-only">
+                    {isAuthenticated ? (
+                        <button onClick={logout} className="btn btn-outline">
+                            <LogOut size={18} style={{ marginRight: '8px' }} />
+                            Log Out
+                        </button>
+                    ) : (
+                        <Link to="/login" className="btn btn-primary">
+                            Sign In / Log In
+                        </Link>
+                    )}
+                </div>
+
+                <button
+                    className="mobile-menu-toggle"
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                >
+                    {isMobileMenuOpen ? <X /> : <Menu />}
+                </button>
+            </div>
+
+            {isMobileMenuOpen && (
+                <div className="mobile-menu">
+                    {navLinks.map((link) => (
+                        <div key={link.name}>
+                            <button
+                                onClick={() => handleNavClick(link.path)}
+                                className="mobile-nav-link"
+                            >
+                                {link.name}
+                            </button>
+                        </div>
+                    ))}
+                    <div className="mobile-auth">
+                        {isAuthenticated ? (
+                            <button onClick={logout} className="btn btn-outline w-full">
+                                Log Out
+                            </button>
+                        ) : (
+                            <Link to="/login" className="btn btn-primary w-full" onClick={() => setIsMobileMenuOpen(false)}>
+                                Sign In / Log In
+                            </Link>
+                        )}
+                    </div>
+                </div>
+            )}
+        </nav>
+    );
+};
+
+export default Navbar;
