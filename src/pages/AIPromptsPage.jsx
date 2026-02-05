@@ -26,7 +26,7 @@ const AIPromptsPage = () => {
     ];
 
     return (
-        <div className="container" style={{ padding: '4rem 0' }}>
+        <div className="container" style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
                 <h1 style={{ color: 'var(--color-primary)', marginBottom: '1rem' }}>AI Prompts Gallery</h1>
                 <p style={{ fontSize: '1.2rem', color: 'var(--color-text-light)' }}>
