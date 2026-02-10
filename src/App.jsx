@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { HelmetProvider } from 'react-helmet-async';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -41,79 +42,81 @@ const PublicRoute = ({ children }) => {
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <div className="app" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-          <Navbar />
-          <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-            <Suspense fallback={<div className="loading-spinner">Loading...</div>}>
-              <Routes>
-                <Route path="/" element={
-                  <PublicRoute>
-                    <LandingPage />
-                  </PublicRoute>
-                } />
-                <Route path="/login" element={
-                  <PublicRoute>
-                    <LoginPage />
-                  </PublicRoute>
-                } />
-                <Route path="/home" element={
-                  <ProtectedRoute>
-                    <HomePage />
-                  </ProtectedRoute>
-                } />
+    <HelmetProvider>
+      <AuthProvider>
+        <Router>
+          <div className="app" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            <Navbar />
+            <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+              <Suspense fallback={<div className="loading-spinner">Loading...</div>}>
+                <Routes>
+                  <Route path="/" element={
+                    <PublicRoute>
+                      <LandingPage />
+                    </PublicRoute>
+                  } />
+                  <Route path="/login" element={
+                    <PublicRoute>
+                      <LoginPage />
+                    </PublicRoute>
+                  } />
+                  <Route path="/home" element={
+                    <ProtectedRoute>
+                      <HomePage />
+                    </ProtectedRoute>
+                  } />
 
-                {/* Feature Routes */}
-                <Route path="/academics/*" element={
-                  <ProtectedRoute>
-                    <AcademicsPage />
-                  </ProtectedRoute>
-                } />
-                <Route path="/tech-skills/*" element={
-                  <ProtectedRoute>
-                    <TechSkillsPage />
-                  </ProtectedRoute>
-                } />
-                <Route path="/non-tech-skills/*" element={
-                  <ProtectedRoute>
-                    <TechSkillsPage /> {/* Reusing TechSkills layout for now as requested */}
-                  </ProtectedRoute>
-                } />
-                <Route path="/library/*" element={
-                  <ProtectedRoute>
-                    <LibraryPage />
-                  </ProtectedRoute>
-                } />
-                <Route path="/certifications" element={
-                  <ProtectedRoute>
-                    <CertificationsPage />
-                  </ProtectedRoute>
-                } />
-                <Route path="/register" element={
-                  <ProtectedRoute>
-                    <RegisterPage />
-                  </ProtectedRoute>
-                } />
-                <Route path="/ai-prompts" element={
-                  <ProtectedRoute>
-                    <AIPromptsPage />
-                  </ProtectedRoute>
-                } />
-                <Route path="/admin" element={
-                  <ProtectedRoute requireHost={true}>
-                    <ControlPanelPage />
-                  </ProtectedRoute>
-                } />
+                  {/* Feature Routes */}
+                  <Route path="/academics/*" element={
+                    <ProtectedRoute>
+                      <AcademicsPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/tech-skills/*" element={
+                    <ProtectedRoute>
+                      <TechSkillsPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/non-tech-skills/*" element={
+                    <ProtectedRoute>
+                      <TechSkillsPage /> {/* Reusing TechSkills layout for now as requested */}
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/library/*" element={
+                    <ProtectedRoute>
+                      <LibraryPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/certifications" element={
+                    <ProtectedRoute>
+                      <CertificationsPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/register" element={
+                    <ProtectedRoute>
+                      <RegisterPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/ai-prompts" element={
+                    <ProtectedRoute>
+                      <AIPromptsPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/admin" element={
+                    <ProtectedRoute requireHost={true}>
+                      <ControlPanelPage />
+                    </ProtectedRoute>
+                  } />
 
-                <Route path="*" element={<Navigate to="/" />} />
-              </Routes>
-            </Suspense>
-          </main>
-          <Footer />
-        </div>
-      </Router>
-    </AuthProvider>
+                  <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+              </Suspense>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </AuthProvider>
+    </HelmetProvider>
   );
 }
 

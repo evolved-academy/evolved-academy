@@ -2,12 +2,18 @@ import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Download, Award } from 'lucide-react';
 
+import SEO from '../components/SEO';
+
 const CertificationsPage = () => {
     const { user } = useAuth();
     const hasCertificates = user && user.completedCourses && user.completedCourses.length > 0;
 
     return (
         <div className="container" style={{ padding: '4rem 0', minHeight: '60vh' }}>
+            <SEO
+                title="Earn Certifications | EvolvEd Academy"
+                description="Get certified in your skills. Showcase your achievements in Academics and Technology to the world."
+            />
             <h1 style={{ color: 'var(--color-primary)', marginBottom: '2rem', textAlign: 'center' }}>My Certifications</h1>
 
             {!hasCertificates ? (

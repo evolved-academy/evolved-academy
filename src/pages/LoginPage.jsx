@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '../components/SEO';
 import AuthCard from '../components/AuthCard';
 
 const LoginPage = () => {
@@ -11,6 +12,10 @@ const LoginPage = () => {
             padding: '2rem',
             background: 'linear-gradient(135deg, var(--color-surface) 0%, #e6f0fa 100%)'
         }}>
+            <SEO
+                title="Login | EvolvEd Academy"
+                description="Access your EvolvEd Academy dashboard. Continue your learning journey in Academics and Technology."
+            />
             <AuthCard />
         </div>
     );

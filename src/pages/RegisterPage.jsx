@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '../components/SEO';
 import { useAuth } from '../context/AuthContext';
 import { Check, Star, Zap, Crown } from 'lucide-react';
 
@@ -24,6 +25,10 @@ const RegisterPage = () => {
 
     return (
         <div className="container" style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
+            <SEO
+                title="Join Us | EvolvEd Academy Registration"
+                description="Sign up for EvolvEd Academy today. Unlock access to premium courses, library resources, and AI tools."
+            />
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
                 <h1 style={{ fontSize: '2.5rem', color: 'var(--color-primary)', marginBottom: '1rem' }}>
                     Invest in Your Evolution... One Pass, Unlimited Access!

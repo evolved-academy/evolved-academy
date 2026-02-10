@@ -32,13 +32,21 @@ const PaidCourses = () => {
     );
 };
 
+import SEO from '../components/SEO';
+
 const TechSkillsPage = () => {
     return (
-        <Routes>
-            <Route path="free" element={<FreeCourses />} />
-            <Route path="paid" element={<PaidCourses />} />
-            <Route path="/" element={<FreeCourses />} />
-        </Routes>
+        <>
+            <SEO
+                title="Tech & Professional Skills | EvolvEd Academy"
+                description="Learn Coding, Web Development, AI, and Soft Skills. Practical courses designed to make you industry-ready."
+            />
+            <Routes>
+                <Route path="free" element={<FreeCourses />} />
+                <Route path="paid" element={<PaidCourses />} />
+                <Route path="/" element={<FreeCourses />} />
+            </Routes>
+        </>
     );
 };
 

@@ -149,25 +149,33 @@ const VideoGallery = ({ board: propBoard }) => {
     );
 };
 
+import SEO from '../components/SEO';
+
 const AcademicsPage = () => {
     return (
-        <Routes>
-            {/* CBSE Routes */}
-            <Route path="cbse" element={<ClassSelection board="cbse" />} />
-            <Route path="cbse/:classId" element={<SubjectSelection board="cbse" />} />
-            <Route path="cbse/:classId/:subject" element={<VideoGallery board="cbse" />} />
+        <>
+            <SEO
+                title="Academic Courses (CBSE & State) | EvolvEd Academy"
+                description="Comprehensive academic courses for Class 8, 9, and 10. Master Science, Maths, and Social Studies with expert-curated content."
+            />
+            <Routes>
+                {/* CBSE Routes */}
+                <Route path="cbse" element={<ClassSelection board="cbse" />} />
+                <Route path="cbse/:classId" element={<SubjectSelection board="cbse" />} />
+                <Route path="cbse/:classId/:subject" element={<VideoGallery board="cbse" />} />
 
-            {/* State Board Routes */}
-            <Route path="state/:state" element={<ClassSelection />} />
-            <Route path="state/:state/:classId" element={<SubjectSelection />} />
-            <Route path="state/:state/:classId/:subject" element={<VideoGallery />} />
+                {/* State Board Routes */}
+                <Route path="state/:state" element={<ClassSelection />} />
+                <Route path="state/:state/:classId" element={<SubjectSelection />} />
+                <Route path="state/:state/:classId/:subject" element={<VideoGallery />} />
 
-            <Route path="/" element={
-                <div className="container" style={{ paddingTop: '4rem', paddingBottom: '4rem', textAlign: 'center' }}>
-                    <h2>Select a Board from the menu to get started</h2>
-                </div>
-            } />
-        </Routes>
+                <Route path="/" element={
+                    <div className="container" style={{ paddingTop: '4rem', paddingBottom: '4rem', textAlign: 'center' }}>
+                        <h2>Select a Board from the menu to get started</h2>
+                    </div>
+                } />
+            </Routes>
+        </>
     );
 };
 

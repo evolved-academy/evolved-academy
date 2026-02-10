@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '../components/SEO';
 import PromptCarousel from '../components/PromptCarousel';
 
 const AIPromptsPage = () => {
@@ -33,6 +34,10 @@ const AIPromptsPage = () => {
 
     return (
         <div className="container" style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
+            <SEO
+                title="AI Prompt Library | EvolvEd Academy"
+                description="Explore a curated collection of AI prompts. Learn how to leverage Artificial Intelligence for learning and productivity."
+            />
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
                 <h1 style={{ color: 'var(--color-primary)', marginBottom: '1rem' }}>AI Prompts Gallery</h1>
                 <p style={{ fontSize: '1.2rem', color: 'var(--color-text-light)' }}>

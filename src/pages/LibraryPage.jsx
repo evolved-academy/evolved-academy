@@ -19,16 +19,24 @@ const ResourceList = () => {
     );
 };
 
+import SEO from '../components/SEO';
+
 const LibraryPage = () => {
     return (
-        <Routes>
-            <Route path=":category" element={<ResourceList />} />
-            <Route path="/" element={
-                <div className="container" style={{ paddingTop: '4rem', paddingBottom: '4rem', textAlign: 'center' }}>
-                    <h2>Select a category to view resources</h2>
-                </div>
-            } />
-        </Routes>
+        <>
+            <SEO
+                title="Digital Library & Resources | EvolvEd Academy"
+                description="Access a vast collection of study materials, reference books, and notes to support your academic success."
+            />
+            <Routes>
+                <Route path=":category" element={<ResourceList />} />
+                <Route path="/" element={
+                    <div className="container" style={{ paddingTop: '4rem', paddingBottom: '4rem', textAlign: 'center' }}>
+                        <h2>Select a category to view resources</h2>
+                    </div>
+                } />
+            </Routes>
+        </>
     );
 };
 

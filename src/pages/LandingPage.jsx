@@ -1,9 +1,12 @@
-import React from 'react';
-import Hero from '../components/Hero';
+import SEO from '../components/SEO';
 
 const LandingPage = () => {
     return (
         <div className="landing-page">
+            <SEO
+                title="EvolvEd Academy | Evolving Education for the Future"
+                description="Join EvolvEd Academy to master Academics, Tech Skills, and AI. A modern platform for 8th-10th grade students to prepare for successful careers."
+            />
             <Hero />
             {/* Additional sections can be added here */}
             <section className="container" style={{ padding: '4rem 1.5rem', textAlign: 'center' }}>
