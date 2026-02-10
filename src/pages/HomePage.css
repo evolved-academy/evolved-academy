@@ -1,0 +1,40 @@
+/* src/pages/HomePage.css */
+
+.home-page .dashboard-card {
+    padding: 2rem;
+    background: white;
+    border-radius: var(--radius-lg, 12px);
+    box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06));
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    border: 2px solid transparent;
+    /* To prevent layout shift on hover if adding border */
+}
+
+.home-page .dashboard-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+    transition: color 0.3s ease-in-out;
+}
+
+.home-page .dashboard-card p {
+    color: #666;
+    transition: color 0.3s ease-in-out;
+}
+
+/* Hover Effects */
+.home-page .dashboard-card:hover {
+    transform: scale(1.05);
+    /* Zoom in */
+    border-color: #013667;
+    /* Outline */
+    box-shadow: 0 0 20px rgba(1, 54, 103, 0.6);
+    /* Glow effect */
+}
+
+.home-page .dashboard-card:hover h3,
+.home-page .dashboard-card:hover p {
+    color: #013667;
+    /* Change text color */
+}

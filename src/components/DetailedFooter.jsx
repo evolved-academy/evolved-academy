@@ -1,8 +1,23 @@
 import React from 'react';
 import { Facebook, Instagram, Youtube, Linkedin, Twitter, Send, Phone, Mail } from 'lucide-react';
 import logo from '../assets/logo.png';
+import { useAuth } from '../context/AuthContext';
+import './DetailedFooter.css';
 
 const DetailedFooter = () => {
+    // const { deleteAccount } = useAuth(); // Reverted for debugging
+
+    const handleDeleteAccount = async (e) => {
+        e.preventDefault();
+        alert("Account deletion feature is temporarily disabled for maintenance.");
+        /*
+        const isConfirmed = window.confirm("Are You Sure You Want To Delete Your Account? 😢");
+        if (isConfirmed) {
+            await deleteAccount();
+        }
+        */
+    };
+
     return (
         <div style={{ backgroundColor: '#113263', color: 'white', padding: '3rem 0', marginTop: 'auto' }}>
             <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem' }}>
@@ -20,53 +35,73 @@ const DetailedFooter = () => {
                     <div style={{ display: 'flex', gap: '1rem' }}>
                         <a href="#" style={{ color: '#fff' }}><Facebook size={24} /></a>
                         <a href="https://www.instagram.com/evolv.ed.001?igsh=MXdzcnNyZmpxbmFibg==" target="_blank" rel="noopener noreferrer" style={{ color: '#fff' }}><Instagram size={24} /></a>
-                        <a href="#" style={{ color: '#fff' }}><Youtube size={24} /></a>
+                        <a href="https://youtube.com/@evolvedacademy001?si=kjlOXY3Fbjr1mZAW" target="_blank" rel="noopener noreferrer" style={{ color: '#fff' }}><Youtube size={24} /></a>
                         <a href="#" style={{ color: '#fff' }}><Linkedin size={24} /></a>
-                        <a href="#" style={{ color: '#fff' }}><Twitter size={24} /></a>
-                        <a href="#" style={{ color: '#fff' }}><Send size={24} /></a>
                     </div>
                 </div>
 
                 {/* Section 2: Columns */}
                 <div>
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem' }}>Company</h3>
-                    <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.9rem', color: '#e0e0e0', lineHeight: '2' }}>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Updates</a></li>
-                        <li><a href="#">Account Deletion</a></li>
+                    <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem' }}>EvolvEd Academy</h3>
+                    <ul className="footer-section-list">
+                        <li className="footer-link-item"><a href="#">About Us</a></li>
+                        <li className="footer-link-item"><a href="#">Get Updates</a></li>
+                        <li className="footer-link-item">
+                            <a href="#" onClick={handleDeleteAccount}>Account Deletion</a>
+                        </li>
                     </ul>
                 </div>
 
                 <div>
                     <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem' }}>Popular Courses</h3>
-                    <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.9rem', color: '#e0e0e0', lineHeight: '2' }}>
-                        <li>AI Use For Daily Life</li>
-                        <li>AI Use for Studies</li>
-                        <li>AI Use For Content Creation</li>
-                        <li>Prompt Engineering</li>
-                        <li>MS Excel Mastery</li>
+                    <ul className="footer-section-list">
+                        <li className="footer-link-item">AI Use For Daily Life</li>
+                        <li className="footer-link-item">
+                            <a href="https://youtu.be/TQ7jr79LAkc?si=HqtaCx-WHitlTAIQ" target="_blank" rel="noopener noreferrer">
+                                AI Use for Studies
+                            </a>
+                        </li>
+                        <li className="footer-link-item">
+                            <a href="https://youtu.be/oJ9gxehvN9Y?si=Kt-y2DRADJJVwiBq" target="_blank" rel="noopener noreferrer">
+                                AI Use For Content Creation
+                            </a>
+                        </li>
+                        <li className="footer-link-item">Prompt Engineering</li>
+                        <li className="footer-link-item">MS Excel Mastery</li>
                     </ul>
                 </div>
 
                 <div>
                     <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem' }}>Connect With Us</h3>
-                    <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.9rem', color: '#e0e0e0', lineHeight: '2' }}>
-                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Mail size={16} /> Email Us</li>
-                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Phone size={16} /> Talk to A Counselor</li>
+                    <ul className="footer-section-list">
+                        <li>
+                            <a
+                                href="https://mail.google.com/mail/?view=cm&fs=1&to=evolvedacademy001@gmail.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="footer-connect-item"
+                                style={{ textDecoration: 'none', color: 'inherit' }}
+                            >
+                                <Mail size={16} /> Email Us
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="tel:8087278653"
+                                className="footer-connect-item"
+                                style={{ textDecoration: 'none', color: 'inherit' }}
+                                onClick={(e) => {
+                                    if (window.innerWidth >= 768) {
+                                        e.preventDefault();
+                                        alert("Call us at: 80872 78653");
+                                    }
+                                }}
+                            >
+                                <Phone size={16} /> Talk to A Counselor
+                            </a>
+                        </li>
                     </ul>
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginTop: '1.5rem', marginBottom: '1rem' }}>Our Products</h3>
-                    <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.9rem', color: '#e0e0e0', lineHeight: '2' }}>
-                        <li>EA App Learning</li>
-                        <li>EA Offline Payments</li>
-                    </ul>
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginTop: '1.5rem', marginBottom: '1rem' }}>Quick Links</h3>
-                    <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.9rem', color: '#e0e0e0', lineHeight: '2' }}>
-                        <li>EA Prerna</li>
-                        <li>EA SIP</li>
-                        <li>EA Gurukulam</li>
-                    </ul>
+
                 </div>
             </div>
             {/* Copyright/Footer Bottom */}

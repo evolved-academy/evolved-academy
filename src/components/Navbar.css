@@ -233,6 +233,7 @@
         width: 100%;
     }
 }
+
 /* Mobile Dropdown Overrides */
 @media (max-width: 768px) {
     .mobile-menu .dropdown-menu {
@@ -258,7 +259,8 @@
     }
 
     .mobile-menu .nested-dropdown {
-        display: flex; /* Always show nested items on mobile for simplicity, or we add another toggle */
+        display: flex;
+        /* Always show nested items on mobile for simplicity, or we add another toggle */
         position: relative;
         top: auto;
         left: auto;
@@ -268,10 +270,9 @@
         padding-left: 1rem;
         background: none;
     }
-    
+
     /* Ensure nested dropdowns are visible without hover on mobile */
     .mobile-menu .nested-dropdown-trigger .nested-dropdown {
         display: flex;
     }
 }
-

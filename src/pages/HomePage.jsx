@@ -1,6 +1,11 @@
 import React from 'react';
 import ContactButton from '../components/ContactButton';
 import DetailedFooter from '../components/DetailedFooter';
+import HomeCarousel from '../components/HomeCarousel';
+import InfoBanner from '../components/InfoBanner';
+import StudentFeedback from '../components/StudentFeedback';
+import SocialCTA from '../components/SocialCTA';
+import './HomePage.css';
 
 
 const HomePage = () => {
@@ -12,20 +17,26 @@ const HomePage = () => {
                 </h1>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
                     {/* Placeholder cards */}
-                    <div style={{ padding: '2rem', background: 'white', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
-                        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#333' }}>Continue Learning</h3>
-                        <p style={{ color: '#666' }}>Pick up where you left off in your courses.</p>
+                    <div className="dashboard-card">
+                        <h3>Continue Learning</h3>
+                        <p>Pick up where you left off in your courses.</p>
                     </div>
-                    <div style={{ padding: '2rem', background: 'white', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
-                        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#333' }}>Recommended for You</h3>
-                        <p style={{ color: '#666' }}>Explore new topics based on your interests.</p>
+                    <div className="dashboard-card">
+                        <h3>Recommended for You</h3>
+                        <p>Explore new topics based on your interests.</p>
                     </div>
-                    <div style={{ padding: '2rem', background: 'white', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)' }}>
-                        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#333' }}>Upcoming Live Sessions</h3>
-                        <p style={{ color: '#666' }}>Join live classes and webinars.</p>
+                    <div className="dashboard-card">
+                        <h3>Upcoming Live Sessions</h3>
+                        <p>Join live classes and webinars.</p>
                     </div>
                 </div>
+                <HomeCarousel />
+                <div style={{ marginTop: '5rem', paddingBottom: '8rem' }}>
+                    <InfoBanner />
+                </div>
+                <StudentFeedback />
             </div>
+            <SocialCTA />
             <DetailedFooter />
             <ContactButton />
         </div>

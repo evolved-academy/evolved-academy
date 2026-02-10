@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 
 Git/
+.vercel
+.env*.local

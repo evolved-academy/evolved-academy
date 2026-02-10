@@ -1,0 +1,126 @@
+/* src/components/StudentFeedback.css */
+.student-feedback-container {
+    padding: 4rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.feedback-header {
+    margin-bottom: 3rem;
+}
+
+.feedback-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.heart-icon {
+    color: #ff4d4f;
+    font-size: 2.2rem;
+}
+
+.feedback-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Featured Card */
+.featured-feedback-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    text-align: left;
+    min-height: 350px;
+}
+
+
+
+.feedback-content {
+    width: 100%;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.quote-icon {
+    font-size: 4rem;
+    color: #e0eaff;
+    line-height: 1;
+    margin-bottom: 1rem;
+    font-family: serif;
+}
+
+.feedback-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #4b5563;
+    /* Slate 600 */
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.student-info h4 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 0.25rem;
+}
+
+.student-info p {
+    font-size: 0.9rem;
+    color: #64748b;
+    /* Slate 500 */
+}
+
+/* Grid for smaller cards */
+.feedback-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.feedback-card-small {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: left;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+}
+
+.small-quote-icon {
+    font-size: 3rem;
+    color: #f1f5f9;
+    font-family: serif;
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .featured-feedback-card {
+        flex-direction: column;
+    }
+
+    .feedback-image-container {
+        height: 250px;
+    }
+
+    .feedback-title {
+        font-size: 1.8rem;
+        flex-wrap: wrap;
+    }
+}

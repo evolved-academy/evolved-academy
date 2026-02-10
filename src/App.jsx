@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import LandingPage from './pages/LandingPage';
-import LoginPage from './pages/LoginPage';
-import HomePage from './pages/HomePage';
-import AcademicsPage from './pages/AcademicsPage';
-import TechSkillsPage from './pages/TechSkillsPage';
-import LibraryPage from './pages/LibraryPage';
-import CertificationsPage from './pages/CertificationsPage';
-import RegisterPage from './pages/RegisterPage';
-import AIPromptsPage from './pages/AIPromptsPage';
-import ControlPanelPage from './pages/ControlPanelPage';
+
+// Lazy load pages
+const LandingPage = React.lazy(() => import('./pages/LandingPage'));
+const LoginPage = React.lazy(() => import('./pages/LoginPage'));
+const HomePage = React.lazy(() => import('./pages/HomePage'));
+const AcademicsPage = React.lazy(() => import('./pages/AcademicsPage'));
+const TechSkillsPage = React.lazy(() => import('./pages/TechSkillsPage'));
+const LibraryPage = React.lazy(() => import('./pages/LibraryPage'));
+const CertificationsPage = React.lazy(() => import('./pages/CertificationsPage'));
+const RegisterPage = React.lazy(() => import('./pages/RegisterPage'));
+const AIPromptsPage = React.lazy(() => import('./pages/AIPromptsPage'));
+const ControlPanelPage = React.lazy(() => import('./pages/ControlPanelPage'));
 
 // Protected Route Component
 const ProtectedRoute = ({ children, requireHost }) => {
@@ -40,11 +42,11 @@ const PublicRoute = ({ children }) => {
 function App() {
   return (
     <AuthProvider>
-      <AuthProvider>
-        <Router>
-          <div className="app" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-            <Navbar />
-            <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <Router>
+        <div className="app" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <Navbar />
+          <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <Suspense fallback={<div className="loading-spinner">Loading...</div>}>
               <Routes>
                 <Route path="/" element={
                   <PublicRoute>
@@ -106,11 +108,11 @@ function App() {
 
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
-            </main>
-            <Footer />
-          </div>
-        </Router>
-      </AuthProvider>
+            </Suspense>
+          </main>
+          <Footer />
+        </div>
+      </Router>
     </AuthProvider>
   );
 }

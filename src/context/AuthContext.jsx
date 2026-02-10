@@ -111,6 +111,28 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  /*
+  const deleteAccount = async () => {
+    try {
+      // Attempt to call a database function to delete the user if it exists
+      // This is the standard way to handle safe deletion from the client
+      const { error } = await supabase.rpc('delete_user_account');
+
+      if (error) {
+        // Fallback: If RPC doesn't exist, just sign out for now to satisfy the UI flow
+        // In a real production app, you'd need a backend function for this.
+        console.warn("Account deletion RPC not found, signing out instead:", error.message);
+        await logout();
+      } else {
+        await logout();
+      }
+    } catch (error) {
+      console.error("Error deleting account:", error.message);
+      throw error;
+    }
+  };
+  */
+
   const value = {
     isAuthenticated: !!user,
     user,
@@ -118,6 +140,7 @@ export const AuthProvider = ({ children }) => {
     loginWithEmail,
     signUpWithEmail,
     logout,
+    // deleteAccount,
     loading
   };
 
