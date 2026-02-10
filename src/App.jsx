@@ -17,6 +17,7 @@ const CertificationsPage = React.lazy(() => import('./pages/CertificationsPage')
 const RegisterPage = React.lazy(() => import('./pages/RegisterPage'));
 const AIPromptsPage = React.lazy(() => import('./pages/AIPromptsPage'));
 const ControlPanelPage = React.lazy(() => import('./pages/ControlPanelPage'));
+const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 
 // Protected Route Component
 const ProtectedRoute = ({ children, requireHost }) => {
@@ -108,7 +109,7 @@ function App() {
                     </ProtectedRoute>
                   } />
 
-                  <Route path="*" element={<Navigate to="/" />} />
+                  <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </Suspense>
             </main>
