@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useAuth } from '../context/AuthContext';
-import { Trash2, UserPlus, Shield } from 'lucide-react';
+import { Trash2, UserPlus, Shield, Key } from 'lucide-react';
 
 const ControlPanelPage = () => {
     const { user } = useAuth();
@@ -9,6 +9,11 @@ const ControlPanelPage = () => {
     const [newEmail, setNewEmail] = useState('');
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
+
+    // Grant Access State
+    const [accessEmail, setAccessEmail] = useState('');
+    const [accessCode, setAccessCode] = useState('');
+    const [accessMessage, setAccessMessage] = useState('');
 
     useEffect(() => {
         fetchEmployees();
@@ -48,6 +53,47 @@ const ControlPanelPage = () => {
             fetchEmployees();
         } catch (error) {
             setMessage('Error adding employee: ' + error.message);
+        }
+    };
+
+    const grantAccess = async (e) => {
+        e.preventDefault();
+        setAccessMessage('');
+
+        if (!accessEmail || !accessCode) return;
+
+        // Split emails by comma or newline, trim whitespace, and filter out empty strings
+        const emails = accessEmail
+            .split(/[\n,]/)
+            .map(email => email.trim())
+            .filter(email => email !== '');
+
+        if (emails.length === 0) {
+            setAccessMessage('Please enter at least one valid email address.');
+            return;
+        }
+
+        try {
+            // Prepare the data for bulk insertion
+            const insertData = emails.map(email => ({
+                email: email,
+                course_code: accessCode
+            }));
+
+            const { error } = await supabase
+                .from('student_access')
+                .insert(insertData);
+
+            if (error) throw error;
+
+            setAccessMessage(`Access granted successfully to ${emails.length} student(s)!`);
+            setAccessEmail('');
+            // Keep the course code as the user might want to add more batches for the same course
+            // setAccessCode(''); 
+        } catch (error) {
+            // Check for specific error (e.g., duplicate key) if possible, but generic message is fine for now
+            console.error(error);
+            setAccessMessage('Error granting access: ' + error.message);
         }
     };
 
@@ -108,6 +154,55 @@ const ControlPanelPage = () => {
                             Grant Access
                         </button>
                         {message && <p style={{ marginTop: '1rem', color: message.includes('Error') ? 'red' : 'green', fontSize: '0.9rem' }}>{message}</p>}
+                    </form>
+                </div>
+
+                {/* Grant Access Card */}
+                <div style={{ background: 'white', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)' }}>
+                    <h3 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <Key size={20} />
+                        Grant Course Access
+                    </h3>
+                    <form onSubmit={grantAccess}>
+                        <div style={{ marginBottom: '1rem' }}>
+                            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Student Emails (separate by comma or new line)</label>
+                            <textarea
+                                value={accessEmail}
+                                onChange={(e) => setAccessEmail(e.target.value)}
+                                placeholder="student1@gmail.com, student2@gmail.com&#10;student3@gmail.com"
+                                style={{
+                                    width: '100%',
+                                    padding: '0.8rem',
+                                    borderRadius: 'var(--radius-md)',
+                                    border: '1px solid var(--color-border)',
+                                    fontSize: '1rem',
+                                    minHeight: '100px',
+                                    resize: 'vertical'
+                                }}
+                                required
+                            />
+                        </div>
+                        <div style={{ marginBottom: '1rem' }}>
+                            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Course Code</label>
+                            <input
+                                type="text"
+                                value={accessCode}
+                                onChange={(e) => setAccessCode(e.target.value)}
+                                placeholder="e.g. EATSFS0126"
+                                style={{
+                                    width: '100%',
+                                    padding: '0.8rem',
+                                    borderRadius: 'var(--radius-md)',
+                                    border: '1px solid var(--color-border)',
+                                    fontSize: '1rem'
+                                }}
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary w-full">
+                            Unlock Course
+                        </button>
+                        {accessMessage && <p style={{ marginTop: '1rem', color: accessMessage.includes('Error') ? 'red' : 'green', fontSize: '0.9rem' }}>{accessMessage}</p>}
                     </form>
                 </div>
 

@@ -1,4 +1,5 @@
 import SEO from '../components/SEO';
+import Hero from '../components/Hero';
 
 const LandingPage = () => {
     return (
