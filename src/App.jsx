@@ -115,6 +115,11 @@ function App() {
                       <CoursePlayerPage />
                     </ProtectedRoute>
                   } />
+                  <Route path="/my-courses" element={
+                    <ProtectedRoute>
+                      <MyCoursesPage />
+                    </ProtectedRoute>
+                  } />
 
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
