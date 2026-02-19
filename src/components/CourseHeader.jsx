@@ -22,31 +22,7 @@ const CourseHeader = ({ title, progress = 0 }) => {
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-                {/* Watched Timer Mock */}
-                <div style={{
-                    background: 'rgba(255,255,255,0.1)',
-                    padding: '4px 12px',
-                    borderRadius: '8px',
-                    textAlign: 'center',
-                    border: '1px solid rgba(255,255,255,0.2)'
-                }}>
-                    <div style={{ fontSize: '0.9rem', fontWeight: '700' }}>18h 47m 27s</div>
-                    <div style={{ fontSize: '0.65rem', opacity: 0.8 }}>WATCHED</div>
-                </div>
 
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    background: '#3f0c75', // Darker accent for "Old Course" button feeling
-                    padding: '6px 12px',
-                    borderRadius: '8px',
-                    fontSize: '0.9rem',
-                    fontWeight: '500',
-                    border: '1px solid rgba(255,255,255,0.2)'
-                }}>
-                    <Flag size={16} /> Old Course
-                </div>
 
                 <Info size={24} color="white" cursor="pointer" />
 

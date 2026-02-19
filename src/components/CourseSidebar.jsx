@@ -37,17 +37,7 @@ const CourseSidebar = ({ modules, currentModuleIndex, currentLectureIndex, onSel
                     }}>
                         Resources
                     </button>
-                    <button style={{
-                        fontSize: '0.8rem',
-                        padding: '6px 12px',
-                        borderRadius: '20px',
-                        border: '1px solid #9333ea',
-                        color: '#9333ea',
-                        background: 'white',
-                        fontWeight: '500'
-                    }}>
-                        Certificate & Refund
-                    </button>
+
                 </div>
             </div>
 
