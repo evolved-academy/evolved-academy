@@ -66,14 +66,14 @@ const EnrolledCourseCard = ({ course, progress = 0 }) => {
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: '#64748b' }}>
-                <Calendar size={14} color="#9333ea" />
+                <Calendar size={14} color="var(--color-primary)" />
                 <span>Enrolled On 26th Jan 2026</span>
             </div>
 
             <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#64748b', fontSize: '0.9rem' }}>
-                        <Info size={16} color="#9333ea" />
+                        <Info size={16} color="var(--color-primary)" />
                         <span>Course Progress</span>
                     </div>
                     <span style={{ fontWeight: '600', color: '#16a34a' }}>{progress}%</span>
@@ -97,7 +97,7 @@ const EnrolledCourseCard = ({ course, progress = 0 }) => {
                 style={{
                     width: '100%',
                     padding: '12px',
-                    background: '#9333ea', // Purple button
+                    background: 'var(--color-primary)', // Primary Blue button
                     color: 'white',
                     border: 'none',
                     borderRadius: '10px',
@@ -111,10 +111,10 @@ const EnrolledCourseCard = ({ course, progress = 0 }) => {
                     marginTop: '0.5rem',
                     transition: 'background 0.2s'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.background = '#7e22ce'}
-                onMouseOut={(e) => e.currentTarget.style.background = '#9333ea'}
+                onMouseOver={(e) => e.currentTarget.style.background = 'var(--color-primary-light)'}
+                onMouseOut={(e) => e.currentTarget.style.background = 'var(--color-primary)'}
             >
-                Resume <PlayCircle size={18} fill="white" color="#9333ea" />
+                Resume <PlayCircle size={18} fill="white" color="var(--color-primary)" />
             </button>
         </div>
     );
