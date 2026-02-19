@@ -28,10 +28,8 @@ const HomePage = () => {
                     .eq('email', user.email);
 
                 if (data && data.length > 0) {
-                    setHasAccess(true);
                     setUnlockedCourses(data.map(item => item.course_code));
                 } else {
-                    setHasAccess(false);
                     setUnlockedCourses([]);
                 }
             } catch (error) {
@@ -43,7 +41,7 @@ const HomePage = () => {
     }, [user]);
 
     const handleContinueLearning = () => {
-        if (hasAccess && unlockedCourses.length > 0) {
+        if (unlockedCourses.length > 0) {
             // Redirect to the first unlocked course
             // In a real app, we would track the last visited course
             navigate(`/course/${unlockedCourses[0]}`);
