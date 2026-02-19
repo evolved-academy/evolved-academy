@@ -15,7 +15,7 @@ import './HomePage.css';
 const HomePage = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
-    const [hasAccess, setHasAccess] = useState(false);
+    const [unlockedCourses, setUnlockedCourses] = useState([]);
 
     useEffect(() => {
         const checkAccess = async () => {
@@ -24,12 +24,15 @@ const HomePage = () => {
             try {
                 const { data, error } = await supabase
                     .from('student_access')
-                    .select('id')
-                    .eq('email', user.email)
-                    .limit(1);
+                    .select('course_code')
+                    .eq('email', user.email);
 
                 if (data && data.length > 0) {
                     setHasAccess(true);
+                    setUnlockedCourses(data.map(item => item.course_code));
+                } else {
+                    setHasAccess(false);
+                    setUnlockedCourses([]);
                 }
             } catch (error) {
                 console.error('Error checking access:', error);
@@ -40,10 +43,12 @@ const HomePage = () => {
     }, [user]);
 
     const handleContinueLearning = () => {
-        if (hasAccess) {
-            navigate('/tech-skills/paid');
+        if (hasAccess && unlockedCourses.length > 0) {
+            // Redirect to the first unlocked course
+            // In a real app, we would track the last visited course
+            navigate(`/course/${unlockedCourses[0]}`);
         } else {
-            navigate('/tech-skills');
+            alert("You have not enrolled for any course yet...");
         }
     };
     return (

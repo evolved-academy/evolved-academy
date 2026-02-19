@@ -4,14 +4,10 @@ import { useAuth } from '../context/AuthContext';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import CourseGrid from '../components/CourseGrid';
 
+import { paidCourses, freeTechCourses } from '../data/courses';
+
 const FreeCourses = ({ isNonTech }) => {
-    const courses = [
-        { title: 'Top AI Tools For Study', description: 'Top In Your Class With AI!', videoId: 'TQ7jr79LAkc' },
-        { title: 'Unleashing Creativity with AI', description: 'How AI is Changing Art, Music & Design 🎨🤖', videoId: 'oJ9gxehvN9Y' },
-        { title: 'Intro to Python', description: 'Learn Python from scratch.' },
-        { title: 'Web Development Basics', description: 'HTML, CSS, and JS fundamentals.' },
-        { title: 'Data Science 101', description: 'Introduction to data analysis.' },
-    ];
+    const courses = freeTechCourses;
     return (
         <div className="container" style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
             <h2 style={{ color: 'var(--color-primary)' }}>Free {isNonTech ? 'Non-Tech' : 'Tech'} Courses</h2>
@@ -45,29 +41,7 @@ const PaidCourses = ({ isNonTech }) => {
         }
     };
 
-    const courses = [
-        {
-            title: 'Full Stack Bootcamp',
-            description: 'Become a full stack developer.',
-            price: '$99',
-            code: 'EATSFS0126',
-            videoId: 'TQ7jr79LAkc' // Placeholder content
-        },
-        {
-            title: 'Advanced AI & ML',
-            description: 'Master machine learning algorithms.',
-            price: '$149',
-            code: 'EATSAI0126',
-            videoId: 'oJ9gxehvN9Y' // Placeholder content
-        },
-        {
-            title: 'Cloud Computing',
-            description: 'AWS and Azure certification prep.',
-            price: '$129',
-            code: 'EATSCC0126',
-            videoId: 'TQ7jr79LAkc' // Placeholder content
-        },
-    ];
+    const courses = paidCourses;
 
     return (
         <div className="container" style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>

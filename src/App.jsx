@@ -18,6 +18,7 @@ const RegisterPage = React.lazy(() => import('./pages/RegisterPage'));
 const AIPromptsPage = React.lazy(() => import('./pages/AIPromptsPage'));
 const ControlPanelPage = React.lazy(() => import('./pages/ControlPanelPage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
+const CoursePlayerPage = React.lazy(() => import('./pages/CoursePlayerPage'));
 
 // Protected Route Component
 const ProtectedRoute = ({ children, requireHost }) => {
@@ -106,6 +107,11 @@ function App() {
                   <Route path="/admin" element={
                     <ProtectedRoute requireHost={true}>
                       <ControlPanelPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/course/:courseId" element={
+                    <ProtectedRoute>
+                      <CoursePlayerPage />
                     </ProtectedRoute>
                   } />
 
