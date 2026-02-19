@@ -19,6 +19,7 @@ const AIPromptsPage = React.lazy(() => import('./pages/AIPromptsPage'));
 const ControlPanelPage = React.lazy(() => import('./pages/ControlPanelPage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 const CoursePlayerPage = React.lazy(() => import('./pages/CoursePlayerPage'));
+const MyCoursesPage = React.lazy(() => import('./pages/MyCoursesPage'));
 
 // Protected Route Component
 const ProtectedRoute = ({ children, requireHost }) => {

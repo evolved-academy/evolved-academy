@@ -42,9 +42,8 @@ const HomePage = () => {
 
     const handleContinueLearning = () => {
         if (unlockedCourses.length > 0) {
-            // Redirect to the first unlocked course
-            // In a real app, we would track the last visited course
-            navigate(`/course/${unlockedCourses[0]}`);
+            // Redirect to the Enrolled Courses page
+            navigate('/my-courses');
         } else {
             alert("You have not enrolled for any course yet...");
         }
