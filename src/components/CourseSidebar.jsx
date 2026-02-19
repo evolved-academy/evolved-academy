@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, PlayCircle, Lock, MonitorPlay, FileText, HelpCircle } from 'lucide-react';
+import { ChevronDown, ChevronUp, PlayCircle, Lock, MonitorPlay, FileText, HelpCircle, CheckCircle, Circle } from 'lucide-react';
 
-const CourseSidebar = ({ modules, currentModuleIndex, currentLectureIndex, onSelectLecture }) => {
+const CourseSidebar = ({ modules, currentModuleIndex, currentLectureIndex, onSelectLecture, completedLectures = [], onToggleCompletion }) => {
     const [openModules, setOpenModules] = useState(
         new Array(modules.length).fill(false).map((_, i) => i === 0) // Default open first module
     );
@@ -83,14 +83,14 @@ const CourseSidebar = ({ modules, currentModuleIndex, currentLectureIndex, onSel
                                 <div style={{ background: '#f8fafc' }}>
                                     {module.lectures.map((lecture, lIndex) => {
                                         const isSelected = isActiveModule && currentLectureIndex === lIndex;
+                                        const lectureId = `${mIndex}-${lIndex}`;
+                                        const isCompleted = completedLectures.includes(lectureId);
 
                                         return (
                                             <div
                                                 key={lIndex}
-                                                onClick={() => onSelectLecture(mIndex, lIndex)}
                                                 style={{
-                                                    padding: '12px 1.25rem 12px 2rem',
-                                                    cursor: 'pointer',
+                                                    padding: '12px 1.25rem 12px 1.25rem',
                                                     display: 'flex',
                                                     gap: '12px',
                                                     alignItems: 'flex-start',
@@ -99,18 +99,32 @@ const CourseSidebar = ({ modules, currentModuleIndex, currentLectureIndex, onSel
                                                     transition: 'background 0.2s'
                                                 }}
                                             >
-                                                <div style={{ marginTop: '2px' }}>
-                                                    {isSelected ? (
-                                                        <MonitorPlay size={16} color="var(--color-primary)" />
+                                                {/* Completion Toggle */}
+                                                <div
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        onToggleCompletion(mIndex, lIndex);
+                                                    }}
+                                                    style={{ cursor: 'pointer', marginTop: '2px' }}
+                                                >
+                                                    {isCompleted ? (
+                                                        <CheckCircle size={18} color="#16a34a" fill="#dcfce7" />
                                                     ) : (
-                                                        <PlayCircle size={16} color="#94a3b8" />
+                                                        <Circle size={18} color="#94a3b8" />
                                                     )}
                                                 </div>
-                                                <div>
+
+                                                {/* Lecture Info (Click to play) */}
+                                                <div
+                                                    onClick={() => onSelectLecture(mIndex, lIndex)}
+                                                    style={{ flex: 1, cursor: 'pointer' }}
+                                                >
                                                     <div style={{
                                                         fontSize: '0.9rem',
                                                         color: isSelected ? 'var(--color-primary)' : '#475569',
-                                                        fontWeight: isSelected ? '600' : '400'
+                                                        fontWeight: isSelected ? '600' : '400',
+                                                        textDecoration: isCompleted ? 'line-through' : 'none',
+                                                        opacity: isCompleted ? 0.7 : 1
                                                     }}>
                                                         {lIndex + 1}. {lecture.title}
                                                     </div>
