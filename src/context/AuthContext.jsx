@@ -71,6 +71,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const loginWithEmail = async (email, password) => {
+    if (/@gmail\.com$/i.test(email.trim())) {
+      throw new Error("Gmail accounts must use Google Sign-In");
+    }
     try {
       const { error } = await supabase.auth.signInWithPassword({
         email,
@@ -84,6 +87,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signUpWithEmail = async (email, password, fullName) => {
+    if (/@gmail\.com$/i.test(email.trim())) {
+      throw new Error("Gmail accounts must use Google Sign-In");
+    }
     try {
       const { error } = await supabase.auth.signUp({
         email,
