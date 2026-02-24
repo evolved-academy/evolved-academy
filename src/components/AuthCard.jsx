@@ -15,18 +15,6 @@ const AuthCard = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-
-        // Block manual sign-in/up for Gmail addresses - Robust Check
-        const isGmail = /@gmail\.com$/i.test(email.trim()) || /@googlemail\.com$/i.test(email.trim());
-        console.log("Checking email:", email, "isGmail:", isGmail);
-
-        if (isGmail) {
-            const msg = 'For your security, Gmail accounts must sign in using the "Continue with Google" button below.';
-            setError(msg);
-            alert(msg); // Aggressive alert for verification
-            return;
-        }
-
         try {
             if (isSignUp) {
                 await signUpWithEmail(email, password, fullName);
@@ -126,16 +114,10 @@ const AuthCard = () => {
                 <span>OR</span>
             </div>
 
-            <button
-                onClick={loginWithGoogle}
-                className={`btn btn-outline w-full google-btn ${(/@gmail\.com$/i.test(email.trim())) ? 'highlighted' : ''}`}
-            >
+            <button onClick={loginWithGoogle} className="btn btn-outline w-full google-btn">
                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="google-icon" />
                 Continue with Google
             </button>
-            <div style={{ fontSize: '10px', color: '#ccc', textAlign: 'center', marginTop: '10px' }}>
-                v1.2 - Gmail Protected
-            </div>
         </div>
     );
 };
