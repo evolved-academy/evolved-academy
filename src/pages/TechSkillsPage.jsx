@@ -4,10 +4,10 @@ import { useAuth } from '../context/AuthContext';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import CourseGrid from '../components/CourseGrid';
 
-import { paidCourses, freeTechCourses } from '../data/courses';
+import { paidTechCourses, paidNonTechCourses, freeTechCourses, freeNonTechCourses } from '../data/courses';
 
 const FreeCourses = ({ isNonTech }) => {
-    const courses = freeTechCourses;
+    const courses = isNonTech ? freeNonTechCourses : freeTechCourses;
     return (
         <div className="container" style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
             <h2 style={{ color: 'var(--color-primary)' }}>Free {isNonTech ? 'Non-Tech' : 'Tech'} Courses</h2>
@@ -41,7 +41,7 @@ const PaidCourses = ({ isNonTech }) => {
         }
     };
 
-    const courses = paidCourses;
+    const courses = isNonTech ? paidNonTechCourses : paidTechCourses;
 
     return (
         <div className="container" style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
