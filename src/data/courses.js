@@ -1,44 +1,35 @@
 export const paidCourses = [
     {
-        title: 'Full Stack Bootcamp',
-        description: 'Become a full stack developer.',
-        price: '$99',
-        code: 'EATSFS0126',
+        title: '5 Day AI Bootcamp 2026',
+        description: 'Master AI in just 5 days with this intensive bootcamp.',
+        price: '₹999',
+        code: 'EATSAI0526',
         videoId: 'TQ7jr79LAkc',
         modules: [
             {
-                title: 'Module 1: How to connect with mentors and Resources',
-                duration: '3m 41s',
-                lectures: [
-                    { title: 'Welcome to the Course', duration: '1m 20s', videoId: 'TQ7jr79LAkc' },
-                    { title: 'Join the Community', duration: '2m 21s', videoId: 'oJ9gxehvN9Y' }
-                ]
+                title: 'Module 1',
+                duration: '0m',
+                lectures: []
             },
             {
-                title: 'Module 2: Introduction to Web Development',
-                duration: '34m 20s',
-                lectures: [
-                    { title: 'How the Web Works', duration: '10m 15s', videoId: 'TQ7jr79LAkc' },
-                    { title: 'Setting up Environment', duration: '24m 05s', videoId: 'oJ9gxehvN9Y' }
-                ]
+                title: 'Module 2',
+                duration: '0m',
+                lectures: []
             },
             {
-                title: 'Module 3: HTML Basics',
-                duration: '2h 11m',
-                lectures: [
-                    { title: 'HTML Tags & Attributes', duration: '45m', videoId: 'TQ7jr79LAkc' },
-                    { title: 'Forms and Inputs', duration: '30m', videoId: 'oJ9gxehvN9Y' },
-                    { title: 'Semantic HTML', duration: '56m', videoId: 'TQ7jr79LAkc' }
-                ]
+                title: 'Module 3',
+                duration: '0m',
+                lectures: []
             },
             {
-                title: 'Module 4: CSS Fundamentals',
-                duration: '3h 53m',
-                lectures: [
-                    { title: 'Selectors and Specificity', duration: '1h 20m', videoId: 'TQ7jr79LAkc' },
-                    { title: 'Box Model', duration: '1h', videoId: 'oJ9gxehvN9Y' },
-                    { title: 'Flexbox & Grid', duration: '1h 33m', videoId: 'TQ7jr79LAkc' }
-                ]
+                title: 'Module 4',
+                duration: '0m',
+                lectures: []
+            },
+            {
+                title: 'Module 5',
+                duration: '0m',
+                lectures: []
             }
         ]
     },
