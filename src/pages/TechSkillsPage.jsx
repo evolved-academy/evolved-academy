@@ -45,7 +45,7 @@ const PaidCourses = ({ isNonTech }) => {
 
     return (
         <div className="container" style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
-            <h2 style={{ color: 'var(--color-primary)' }}>Premium {isNonTech ? 'Non-Tech' : 'Tech'} Courses {isNonTech ? '' : '(Updated)'}</h2>
+            <h2 style={{ color: 'var(--color-primary)' }}>Premium {isNonTech ? 'Non-Tech' : 'Tech'} Courses</h2>
             <CourseGrid items={courses} type="paid" unlockedCodes={unlockedCodes} />
         </div>
     );

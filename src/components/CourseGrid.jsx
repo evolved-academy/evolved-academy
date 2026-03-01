@@ -1,8 +1,17 @@
 import React from 'react';
 import { PlayCircle, Download, ShoppingCart, CheckCircle, Lock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import PaymentButton from './PaymentButton';
 
 const CourseGrid = ({ items, type = 'video', unlockedCodes = [] }) => {
+    const navigate = useNavigate();
+
+    const handleCourseClick = (item, isUnlocked) => {
+        if (type === 'paid' && isUnlocked) {
+            navigate(`/course/${item.code}`);
+        }
+    };
+
     return (
         <div className="course-grid">
             {items.map((item, index) => {
@@ -10,16 +19,26 @@ const CourseGrid = ({ items, type = 'video', unlockedCodes = [] }) => {
                 const showVideo = item.videoId && (type === 'video' || (type === 'paid' && isUnlocked));
 
                 return (
-                    <div key={index} style={{
-                        background: 'white',
-                        borderRadius: 'var(--radius-md)',
-                        boxShadow: 'var(--shadow-sm)',
-                        overflow: 'hidden',
-                        transition: 'transform 0.2s',
-                        cursor: 'pointer'
-                    }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                    <div key={index}
+                        onClick={() => handleCourseClick(item, isUnlocked)}
+                        style={{
+                            background: 'white',
+                            borderRadius: 'var(--radius-md)',
+                            boxShadow: 'var(--shadow-sm)',
+                            overflow: 'hidden',
+                            transition: 'transform 0.2s',
+                            cursor: (type === 'paid' && isUnlocked) ? 'pointer' : 'default'
+                        }}
+                        onMouseEnter={(e) => {
+                            if (type === 'paid' && isUnlocked) {
+                                e.currentTarget.style.transform = 'translateY(-5px)';
+                            }
+                        }}
+                        onMouseLeave={(e) => {
+                            if (type === 'paid' && isUnlocked) {
+                                e.currentTarget.style.transform = 'translateY(0)';
+                            }
+                        }}
                     >
                         {/* Thumbnail */}
                         <div style={{
