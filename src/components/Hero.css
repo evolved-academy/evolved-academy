@@ -39,7 +39,7 @@
 
 .hero-actions {
     display: flex;
-    gap: var(--spacing-md);
+    gap: 1.5rem;
 }
 
 .btn-hero-primary {
