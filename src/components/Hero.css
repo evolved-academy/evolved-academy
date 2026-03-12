@@ -28,7 +28,7 @@
     font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: var(--spacing-md);
-    line-height: 1.2;
+    line-height: 1.1;
 }
 
 .hero-subtitle {
@@ -52,11 +52,34 @@
 }
 
 @media (max-width: 768px) {
+    .hero {
+        height: 500px;
+    }
+
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: var(--spacing-lg);
     }
 
     .hero-actions {
         flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+        padding: 0.8rem 1.5rem !important;
+        font-size: 1.1rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.8rem;
     }
 }
