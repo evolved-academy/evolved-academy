@@ -1,7 +1,8 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Hero.css';
 
-const Hero = () => {
+    const navigate = useNavigate();
+
     return (
         <section className="hero">
             <div className="hero-overlay">
@@ -13,7 +14,11 @@ const Hero = () => {
                         Join EvolvEd Academy to transform your learning journey with world-class education and practical skills.
                     </p>
                     <div className="hero-actions">
-                        <button className="btn btn-primary" style={{ fontSize: '1.2rem', padding: '1rem 2rem' }}>
+                        <button 
+                            className="btn btn-primary btn-hero-primary" 
+                            style={{ fontSize: '1.2rem', padding: '1rem 2rem' }}
+                            onClick={() => navigate('/login')}
+                        >
                             Get Started
                         </button>
                         <button className="btn btn-outline" style={{ fontSize: '1.2rem', padding: '1rem 2rem', borderColor: 'white', color: 'white' }}>
