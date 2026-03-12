@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Star, Calendar, Info, MessageCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import './HomeCarousel.css';
 
 const HomeCarousel = () => {
+    const navigate = useNavigate();
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
@@ -14,7 +14,8 @@ const HomeCarousel = () => {
             title: 'Empowering Future Innovators',
             description: 'EvolvEd Academy is dedicated to providing courses in tech skills and beyond. Join us to shape your education.',
             bgGradient: 'linear-gradient(135deg, #1a2980 0%, #26d0ce 100%)',
-            icon: Info
+            icon: Info,
+            path: '/about'
         },
         {
             id: 2,
@@ -23,7 +24,8 @@ const HomeCarousel = () => {
             title: 'Transforming Creative Minds',
             description: 'Dive deep into the world of Artificial Intelligence, and its use in everyday life, with help of our AI Bootcamps',
             bgGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            icon: Calendar
+            icon: Calendar,
+            path: '/tech-skills/paid'
         },
         {
             id: 3,
@@ -34,16 +36,18 @@ const HomeCarousel = () => {
             author: '- Student',
             rating: 5,
             bgGradient: 'linear-gradient(135deg, #ff0844 0%, #ffb199 100%)',
-            icon: MessageCircle
+            icon: MessageCircle,
+            path: '/tech-skills/paid'
         },
         {
             id: 4,
             type: 'announcement',
-            tag: 'New Launch',
-            title: 'Web Developement Bootcamp',
-            description: 'Starting next month: A comprehensive 12-week bootcamp to take you from beginner to full-stack pro. Early bird registration open now!',
+            tag: 'Upcoming',
+            title: '5 Day AI Bootcamp 2026',
+            description: 'Master AI in just 5 days with this intensive bootcamp. Limited seats available! Register Now.',
             bgGradient: 'linear-gradient(135deg, #0ba360 0%, #3cba92 100%)',
-            icon: Calendar
+            icon: Calendar,
+            path: '/tech-skills/paid'
         }
     ];
 
@@ -105,7 +109,12 @@ const HomeCarousel = () => {
 
                                 {slide.author && <p className="review-author">{slide.author}</p>}
 
-                                <button className="carousel-btn">Learn More</button>
+                                <button
+                                    className="carousel-btn"
+                                    onClick={() => slide.path && navigate(slide.path)}
+                                >
+                                    Learn More
+                                </button>
                             </div>
                         </div>
                     </div>
