@@ -2,6 +2,7 @@ import React from 'react';
 import { Facebook, Instagram, Youtube, Linkedin, Twitter, Send, Phone, Mail } from 'lucide-react';
 import logo from '../assets/logo.png';
 import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 import './DetailedFooter.css';
 
 const DetailedFooter = () => {
@@ -44,8 +45,10 @@ const DetailedFooter = () => {
                 <div>
                     <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem' }}>EvolvEd Academy</h3>
                     <ul className="footer-section-list">
-                        <li className="footer-link-item"><a href="#">About Us</a></li>
-                        <li className="footer-link-item"><a href="#">Get Updates</a></li>
+                        <ul className="footer-links">
+                            <li><Link to="/about">About Us</Link></li>
+                            <li><a href="#updates">Get Updates</a></li>
+                        </ul>
                         <li className="footer-link-item">
                             <a href="#" onClick={handleDeleteAccount}>Account Deletion</a>
                         </li>
