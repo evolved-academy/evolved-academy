@@ -45,10 +45,8 @@ const DetailedFooter = () => {
                 <div>
                     <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem' }}>EvolvEd Academy</h3>
                     <ul className="footer-section-list">
-                        <ul className="footer-links">
-                            <li><Link to="/about">About Us</Link></li>
-                            <li><a href="#updates">Get Updates</a></li>
-                        </ul>
+                        <li className="footer-link-item"><Link to="/about">About Us</Link></li>
+                        <li className="footer-link-item"><a href="#updates">Get Updates</a></li>
                         <li className="footer-link-item">
                             <a href="#" onClick={handleDeleteAccount}>Account Deletion</a>
                         </li>
