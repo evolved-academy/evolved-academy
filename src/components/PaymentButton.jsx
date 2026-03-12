@@ -6,6 +6,8 @@ const PaymentButton = ({ amount, courseTitle, btnStyle }) => {
         const title = courseTitle ? courseTitle.trim() : '';
         if (title.includes('5 Day AI Bootcamp')) {
             window.open("https://forms.gle/J9hqn3Q98RYSf8vc6", "_blank");
+        } else if (title.includes('Prompt Engineering')) {
+            window.open("https://forms.gle/5od4hoCwcVnWGYAg9", "_blank");
         } else {
             alert("Enrollment feature coming soon!");
         }
