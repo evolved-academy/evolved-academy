@@ -68,7 +68,7 @@ const HomePage = () => {
                         <h3>Recommended for You</h3>
                         <p>Explore new topics based on your interests.</p>
                     </div>
-                    <div className="dashboard-card">
+                    <div className="dashboard-card" onClick={() => navigate('/tech-skills/paid')} style={{ cursor: 'pointer' }}>
                         <h3>Upcoming Live Sessions</h3>
                         <p>Join live classes and webinars.</p>
                     </div>
