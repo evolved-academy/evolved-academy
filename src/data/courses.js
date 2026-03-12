@@ -5,7 +5,6 @@ export const paidTechCourses = [
         thumbnail: '/assets/ai_bootcamp_thumbnail.png',
         price: '₹499',
         code: 'EATSAI0526',
-        videoId: 'TQ7jr79LAkc',
         modules: [
             { title: 'Module 1', duration: '0m', lectures: [] },
             { title: 'Module 2', duration: '0m', lectures: [] },
@@ -20,7 +19,6 @@ export const paidTechCourses = [
         thumbnail: '/assets/prompt_eng_thumbnail.png',
         price: '₹199',
         code: 'EATSPE0126',
-        videoId: 'oJ9gxehvN9Y',
         modules: [
             { title: 'Module 1', duration: '0m', lectures: [] },
             { title: 'Module 2', duration: '0m', lectures: [] },

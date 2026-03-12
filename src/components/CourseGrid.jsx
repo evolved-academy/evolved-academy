@@ -16,7 +16,7 @@ const CourseGrid = ({ items, type = 'video', unlockedCodes = [] }) => {
         <div className="course-grid">
             {items.map((item, index) => {
                 const isUnlocked = type === 'paid' ? unlockedCodes.includes(item.code) : true;
-                const showVideo = item.videoId && (type === 'video' || (type === 'paid' && isUnlocked));
+                const showVideo = type === 'video' && item.videoId;
 
                 return (
                     <div key={index}
