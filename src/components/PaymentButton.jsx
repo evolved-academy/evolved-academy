@@ -3,7 +3,8 @@ import { ShoppingCart } from 'lucide-react';
 
 const PaymentButton = ({ amount, courseTitle, btnStyle }) => {
     const handlePayment = () => {
-        if (courseTitle === '5 Day AI Bootcamp 2026') {
+        const title = courseTitle ? courseTitle.trim() : '';
+        if (title.includes('5 Day AI Bootcamp')) {
             window.open("https://forms.gle/J9hqn3Q98RYSf8vc6", "_blank");
         } else {
             alert("Enrollment feature coming soon!");
