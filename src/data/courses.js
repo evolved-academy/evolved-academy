@@ -17,7 +17,8 @@ export const paidTechCourses = [
     {
         title: 'Prompt Engineering',
         description: 'Learn how to talk with AI in detail',
-        price: '₹100',
+        thumbnail: '/assets/prompt_eng_thumbnail.png',
+        price: '₹199',
         code: 'EATSPE0126',
         videoId: 'oJ9gxehvN9Y',
         modules: [
