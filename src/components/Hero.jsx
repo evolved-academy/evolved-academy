@@ -14,7 +14,6 @@ const Hero = () => {
                     <p className="hero-subtitle">
                         Join EvolvEd Academy to transform your learning journey with world-class education and practical skills.
                     </p>
-                    <div className="hero-actions">
                         <button 
                             className="btn btn-primary btn-hero-primary" 
                             style={{ fontSize: '1.2rem', padding: '1rem 2rem' }}
@@ -22,10 +21,13 @@ const Hero = () => {
                         >
                             Get Started
                         </button>
-                        <button className="btn btn-outline" style={{ fontSize: '1.2rem', padding: '1rem 2rem', borderColor: 'white', color: 'white' }}>
-                            Learn More
+                        <button 
+                            className="btn btn-outline" 
+                            style={{ fontSize: '1.2rem', padding: '1rem 2rem', borderColor: 'white', color: 'white' }}
+                            onClick={() => navigate('/about')}
+                        >
+                            About Us
                         </button>
-                    </div>
                 </div>
             </div>
         </section>
