@@ -10,7 +10,7 @@ const LandingPage = () => {
             />
             <Hero />
             {/* Additional sections can be added here */}
-            <section className="container" style={{ padding: '2rem 1.5rem 0 1.5rem', textAlign: 'center' }}>
+            <section className="container" style={{ padding: '2rem 1.5rem 1rem 1.5rem', textAlign: 'center' }}>
                 <h2 style={{ fontSize: '2.5rem', color: 'var(--color-primary)', marginBottom: '1rem' }}>
                     Unlock Your Potential
                 </h2>
@@ -20,7 +20,7 @@ const LandingPage = () => {
             </section>
 
             {/* Free Courses Section */}
-            <section className="container" style={{ padding: '0 1.5rem 4rem 1.5rem', backgroundColor: 'var(--color-surface)', borderRadius: '1rem' }}>
+            <section className="container" style={{ padding: '1rem 1.5rem 4rem 1.5rem', backgroundColor: 'var(--color-surface)', borderRadius: '1rem' }}>
                 <h2 style={{ fontSize: '2.5rem', color: 'var(--color-primary)', marginBottom: '2rem', textAlign: 'center' }}>
                     Free Courses
                 </h2>
