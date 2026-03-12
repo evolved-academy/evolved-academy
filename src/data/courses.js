@@ -15,28 +15,17 @@ export const paidTechCourses = [
         ]
     },
     {
-        title: 'Advanced AI & ML',
-        description: 'Master machine learning algorithms.',
-        price: '$149',
-        code: 'EATSAI0126',
+        title: 'Prompt Engineering',
+        description: 'Learn how to talk with AI in detail',
+        price: '₹100',
+        code: 'EATSPE0126',
         videoId: 'oJ9gxehvN9Y',
         modules: [
-            {
-                title: 'Module 1: Intro to AI',
-                duration: '45m',
-                lectures: [
-                    { title: 'What is AI?', duration: '15m', videoId: 'oJ9gxehvN9Y' },
-                    { title: 'History of AI', duration: '30m', videoId: 'TQ7jr79LAkc' }
-                ]
-            },
-            {
-                title: 'Module 2: Python for Data Science',
-                duration: '1h 30m',
-                lectures: [
-                    { title: 'NumPy Basics', duration: '45m', videoId: 'oJ9gxehvN9Y' },
-                    { title: 'Pandas DataFrames', duration: '45m', videoId: 'TQ7jr79LAkc' }
-                ]
-            }
+            { title: 'Module 1', duration: '0m', lectures: [] },
+            { title: 'Module 2', duration: '0m', lectures: [] },
+            { title: 'Module 3', duration: '0m', lectures: [] },
+            { title: 'Module 4', duration: '0m', lectures: [] },
+            { title: 'Module 5', duration: '0m', lectures: [] }
         ]
     },
     {
