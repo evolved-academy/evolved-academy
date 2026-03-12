@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Star, Calendar, Info, MessageCircle } from 'lucide-react';
 import './HomeCarousel.css';
