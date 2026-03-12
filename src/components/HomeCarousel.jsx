@@ -1,5 +1,6 @@
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './HomeCarousel.css';
+import { ChevronLeft, ChevronRight, Star, Calendar, Info, MessageCircle } from 'lucide-react';
 
 const HomeCarousel = () => {
     const navigate = useNavigate();
