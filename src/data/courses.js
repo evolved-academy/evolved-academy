@@ -2,6 +2,7 @@ export const paidTechCourses = [
     {
         title: '5 Day AI Bootcamp 2026',
         description: 'Master AI in just 5 days with this intensive bootcamp.',
+        thumbnail: '/assets/AI Bootcamp Thumbnail.png',
         price: '₹999',
         code: 'EATSAI0526',
         videoId: 'TQ7jr79LAkc',
