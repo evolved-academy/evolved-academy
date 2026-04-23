@@ -172,10 +172,40 @@
 
 @media (max-width: 768px) {
     .home-carousel-container {
-        height: 500px;
+        height: 350px;
+    }
+
+    .carousel-content {
+        padding: 1.5rem;
     }
 
     .carousel-title {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .carousel-description {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.4;
+    }
+
+    .carousel-nav-btn {
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .carousel-prev {
+        left: 5px;
+    }
+
+    .carousel-next {
+        right: 5px;
+    }
+
+    .carousel-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
     }
 }

@@ -54,27 +54,27 @@ const HomePage = () => {
                 title="Student Dashboard | EvolvEd Academy"
                 description="Manage your courses, track progress, and access learning resources from your personalized dashboard."
             />
-            <div className="container" style={{ padding: '4rem 1.5rem', width: '100%' }}>
-                <h1 style={{ fontSize: '2.5rem', color: 'var(--color-primary)', marginBottom: '2rem' }}>
+            <div className="container home-dashboard-container">
+                <h1 className="dashboard-welcome">
                     Welcome to Your Dashboard!
                 </h1>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+                <div className="dashboard-grid">
                     {/* Placeholder cards */}
-                    <div className="dashboard-card" onClick={handleContinueLearning} style={{ cursor: 'pointer' }}>
+                    <div className="dashboard-card" onClick={handleContinueLearning}>
                         <h3>Continue Learning</h3>
                         <p>Pick up where you left off in your courses.</p>
                     </div>
-                    <div className="dashboard-card" onClick={() => navigate('/tech-skills/free')} style={{ cursor: 'pointer' }}>
+                    <div className="dashboard-card" onClick={() => navigate('/tech-skills/free')}>
                         <h3>Recommended for You</h3>
                         <p>Explore new topics based on your interests.</p>
                     </div>
-                    <div className="dashboard-card" onClick={() => navigate('/tech-skills/paid')} style={{ cursor: 'pointer' }}>
+                    <div className="dashboard-card" onClick={() => navigate('/tech-skills/paid')}>
                         <h3>Upcoming Live Sessions</h3>
                         <p>Join live classes and webinars.</p>
                     </div>
                 </div>
                 <HomeCarousel />
-                <div style={{ marginTop: '5rem', paddingBottom: '8rem' }}>
+                <div className="info-banner-wrapper">
                     <InfoBanner />
                 </div>
                 <StudentFeedback />

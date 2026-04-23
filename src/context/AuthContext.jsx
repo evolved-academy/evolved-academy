@@ -52,23 +52,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const loginWithGoogle = async () => {
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          queryParams: {
-            access_type: 'offline',
-            prompt: 'consent',
-          },
-        },
-      });
-      if (error) throw error;
-    } catch (error) {
-      console.error("Error logging in with Google:", error.message);
-      alert("Error logging in: " + error.message);
-    }
-  };
+
 
   const loginWithEmail = async (email, password) => {
     try {
@@ -136,7 +120,6 @@ export const AuthProvider = ({ children }) => {
   const value = {
     isAuthenticated: !!user,
     user,
-    loginWithGoogle,
     loginWithEmail,
     signUpWithEmail,
     logout,

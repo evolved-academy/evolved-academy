@@ -173,9 +173,6 @@ const Navbar = () => {
                                     </button>
                                     {activeDropdown === link.name && (
                                         <div className="mobile-dropdown-content">
-                                            {/* Reuse renderDropdown logic but we might need to adjust styles or structure. 
-                                                Since renderDropdown returns a specific structure, we might need a mobile-specific render 
-                                                OR we rely on CSS to reset the absolute positioning for .dropdown-menu when inside .mobile-menu */}
                                             {renderDropdown(link.name)}
                                         </div>
                                     )}

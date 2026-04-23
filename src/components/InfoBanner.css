@@ -277,8 +277,8 @@
     }
 
     .banner-headline {
-        font-size: 1.5rem;
-        /* Reduced from 2rem */
+        font-size: 1.4rem; /* Further reduced from 1.5rem */
+        line-height: 1.3;
     }
 
     .banner-subtext {
@@ -297,13 +297,12 @@
     /* Switch to clear vertical stack */
     .banner-visual-section {
         height: auto;
-        /* Dynamic height */
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
-        margin-top: 1.5rem;
-        margin-bottom: 1.5rem;
+        gap: 0.75rem; /* Reduced gap */
+        margin-top: 1rem;
+        margin-bottom: 1rem;
     }
 
     /* Disable dashed connector for now as it complicates stack */
@@ -319,9 +318,9 @@
     }
 
     .chat-bubble {
-        font-size: 0.65rem;
-        /* Reduced font size */
-        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem; /* Slightly larger for readability */
+        padding: 0.6rem 1rem;
+        margin-bottom: 1rem;
     }
 
     /* Reorder items using Flexbox 'order' property 

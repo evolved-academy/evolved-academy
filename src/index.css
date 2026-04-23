@@ -71,6 +71,16 @@ button {
   padding: 0 var(--spacing-md);
 }
 
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  html {
+    font-size: 14px; /* Slightly smaller base font on mobile */
+  }
+}
+
 .btn {
   display: inline-flex;
   align-items: center;

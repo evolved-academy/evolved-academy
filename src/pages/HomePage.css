@@ -1,19 +1,41 @@
 /* src/pages/HomePage.css */
 
+.home-dashboard-container {
+    padding: 4rem 1.5rem;
+    width: 100%;
+}
+
+.dashboard-welcome {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    margin-bottom: 2rem;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.info-banner-wrapper {
+    margin-top: 5rem;
+    padding-bottom: 8rem;
+}
+
 .home-page .dashboard-card {
     padding: 2rem;
     background: white;
     border-radius: var(--radius-lg, 12px);
-    box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06));
+    box-shadow: var(--shadow-md);
     transition: all 0.3s ease-in-out;
     cursor: pointer;
     border: 2px solid transparent;
-    /* To prevent layout shift on hover if adding border */
 }
 
 .home-page .dashboard-card h3 {
     font-size: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     color: #333;
     transition: color 0.3s ease-in-out;
 }
@@ -21,20 +43,48 @@
 .home-page .dashboard-card p {
     color: #666;
     transition: color 0.3s ease-in-out;
+    font-size: 1rem;
 }
 
 /* Hover Effects */
 .home-page .dashboard-card:hover {
-    transform: scale(1.05);
-    /* Zoom in */
+    transform: translateY(-5px);
     border-color: #013667;
-    /* Outline */
-    box-shadow: 0 0 20px rgba(1, 54, 103, 0.6);
-    /* Glow effect */
+    box-shadow: 0 10px 20px rgba(1, 54, 103, 0.2);
 }
 
 .home-page .dashboard-card:hover h3,
 .home-page .dashboard-card:hover p {
     color: #013667;
-    /* Change text color */
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .home-dashboard-container {
+        padding: 2rem 1rem;
+    }
+
+    .dashboard-welcome {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .home-page .dashboard-card {
+        padding: 1.5rem;
+    }
+
+    .home-page .dashboard-card h3 {
+        font-size: 1.25rem;
+    }
+
+    .info-banner-wrapper {
+        margin-top: 3rem;
+        padding-bottom: 4rem;
+    }
 }

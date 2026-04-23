@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './AuthCard.css';
 
 const AuthCard = () => {
-    const { loginWithGoogle, loginWithEmail, signUpWithEmail } = useAuth();
+    const { loginWithEmail, signUpWithEmail } = useAuth();
     const navigate = useNavigate();
     const [isSignUp, setIsSignUp] = useState(false);
     const [email, setEmail] = useState('');
@@ -110,14 +110,6 @@ const AuthCard = () => {
                 </p>
             </div>
 
-            <div className="auth-divider">
-                <span>OR</span>
-            </div>
-
-            <button onClick={loginWithGoogle} className="btn btn-outline w-full google-btn">
-                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="google-icon" />
-                Continue with Google
-            </button>
         </div>
     );
 };
