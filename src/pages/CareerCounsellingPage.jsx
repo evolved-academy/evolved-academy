@@ -54,7 +54,7 @@ const CareerCounsellingPage = () => {
                 <div className="cc-cta-section">
                     <button 
                         className="cc-main-register-btn"
-                        onClick={() => window.open('https://forms.gle/VFtvMwsHvWE2MEMs8', '_blank')}
+                        onClick={() => window.open('https://forms.gle/HsNiQJkpwwo5Vsva8', '_blank')}
                     >
                         REGISTER NOW!
                     </button>
