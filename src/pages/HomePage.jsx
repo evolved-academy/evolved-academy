@@ -109,7 +109,7 @@ const HomePage = () => {
                                         <GraduationCap size={120} />
                                     </div>
                                     <h3 style={{ color: '#ffd54f' }}>Career Counselling</h3>
-                                    <p style={{ opacity: 0.9 }}>Access your personalized career path and expert modules.</p>
+                                    <p style={{ color: 'white' }}>Access your personalized career path and expert modules.</p>
                                     <button 
                                         className="btn btn-primary" 
                                         style={{ 

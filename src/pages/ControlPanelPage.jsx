@@ -282,7 +282,7 @@ const ControlPanelPage = () => {
                                 type="text"
                                 value={specialCode}
                                 onChange={(e) => setSpecialCode(e.target.value)}
-                                placeholder="e.g. SC-CAREER-01"
+                                placeholder="e.g. SC-CAREER-199 or SC-CAREER-399"
                                 style={{
                                     width: '100%',
                                     padding: '0.8rem',
