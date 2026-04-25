@@ -36,54 +36,18 @@ const CareerCounsellingPage = () => {
             </header>
 
             <main className="cc-container">
-                <div className="cc-main-grid">
-                    <div className="cc-divider"></div>
-                    
-                    <div className="cc-column">
-                        <ul className="cc-feature-list">
-                            <li className="cc-feature-item">
-                                <span className="cc-feature-icon"><Check size={20} /></span>
-                                Detailed Aptitude Test
-                            </li>
-                            <li className="cc-feature-item">
-                                <span className="cc-feature-icon"><Check size={20} /></span>
-                                Personalized Career Guidance
-                            </li>
-                        </ul>
+                <div className="cc-statements-card">
+                    <div className="cc-statement-item">
+                        <span className="cc-number">1.</span>
+                        <p>This Counselling Will Be Conducted Fully Online</p>
                     </div>
-
-                    <div className="cc-column">
-                        <ul className="cc-feature-list">
-                            <li className="cc-feature-item">
-                                <span className="cc-feature-icon"><Check size={20} /></span>
-                                Detailed Aptitude Test
-                            </li>
-                            <li className="cc-feature-item">
-                                <span className="cc-feature-icon"><Check size={20} /></span>
-                                Personalized Career Guidance
-                            </li>
-                            <li className="cc-feature-item">
-                                <span className="cc-feature-icon"><Check size={20} /></span>
-                                EXPERT SESSION & GUIDANCE
-                            </li>
-                            <li className="cc-feature-item" style={{ opacity: 0.8, fontSize: '0.9rem' }}>
-                                (IITians & CA Toppers)
-                            </li>
-                        </ul>
+                    <div className="cc-statement-item">
+                        <span className="cc-number">2.</span>
+                        <p>Test and Sessions Both Will Be Conducted Through Our Website And Online Virtual Rooms</p>
                     </div>
-                </div>
-
-                <div className="cc-pricing-cards">
-                    <div className="cc-price-burst" onClick={() => window.open('https://forms.gle/VFtvMwsHvWE2MEMs8', '_blank')}>
-                        <span>ONLY</span>
-                        <h3>₹ 199/-</h3>
-                        <p>Limited Time Offer</p>
-                    </div>
-
-                    <div className="cc-price-burst" onClick={() => window.open('https://forms.gle/VFtvMwsHvWE2MEMs8', '_blank')}>
-                        <span>ONLY</span>
-                        <h3>₹ 399/-</h3>
-                        <p>Limited Time Offer</p>
+                    <div className="cc-statement-item">
+                        <span className="cc-number">3.</span>
+                        <p>Fill This Form By Clicking On Button Below, We Will Contact You Through Your Details As Soon As Possible!</p>
                     </div>
                 </div>
 
@@ -94,10 +58,6 @@ const CareerCounsellingPage = () => {
                     >
                         REGISTER NOW!
                     </button>
-                    <br />
-                    <div className="cc-footer-text">
-                        Start Your Career Journey for Just ₹399!
-                    </div>
                 </div>
             </main>
 
