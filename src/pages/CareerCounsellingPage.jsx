@@ -1,12 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check, Lightbulb, Settings, UserCheck, GraduationCap } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { supabase } from '../supabase';
 import SEO from '../components/SEO';
 import DetailedFooter from '../components/DetailedFooter';
 import './CareerCounsellingPage.css';
 
 const CareerCounsellingPage = () => {
     const navigate = useNavigate();
+    const { user } = useAuth();
+    const [hasSpecialAccess, setHasSpecialAccess] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const checkSpecialAccess = async () => {
+            if (!user?.email) {
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase
+                    .from('student_access')
+                    .select('course_code')
+                    .eq('email', user.email)
+                    .like('course_code', 'SC%');
+
+                if (data && data.length > 0) {
+                    setHasSpecialAccess(true);
+                }
+            } catch (error) {
+                console.error('Error checking special access:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        checkSpecialAccess();
+    }, [user]);
+
+    const handleRegisterClick = () => {
+        if (hasSpecialAccess) {
+            // Future subpage details to be provided by user
+            alert("Special Course Unlocked! Subpage details coming soon.");
+            // navigate('/special-course-subpage');
+        } else {
+            window.open('https://forms.gle/HsNiQJkpwwo5Vsva8', '_blank');
+        }
+    };
 
     return (
         <div className="cc-page">
@@ -52,12 +94,14 @@ const CareerCounsellingPage = () => {
                 </div>
 
                 <div className="cc-cta-section">
-                    <button 
-                        className="cc-main-register-btn"
-                        onClick={() => window.open('https://forms.gle/HsNiQJkpwwo5Vsva8', '_blank')}
-                    >
-                        REGISTER NOW!
-                    </button>
+                    {!loading && (
+                        <button 
+                            className="cc-main-register-btn"
+                            onClick={handleRegisterClick}
+                        >
+                            {hasSpecialAccess ? "LET'S START" : "REGISTER NOW!"}
+                        </button>
+                    )}
                 </div>
             </main>
 

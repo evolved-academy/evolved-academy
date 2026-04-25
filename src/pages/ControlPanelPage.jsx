@@ -15,6 +15,11 @@ const ControlPanelPage = () => {
     const [accessCode, setAccessCode] = useState('');
     const [accessMessage, setAccessMessage] = useState('');
 
+    // Special Course Access State
+    const [specialEmail, setSpecialEmail] = useState('');
+    const [specialCode, setSpecialCode] = useState('');
+    const [specialMessage, setSpecialMessage] = useState('');
+
     useEffect(() => {
         fetchEmployees();
     }, []);
@@ -88,12 +93,52 @@ const ControlPanelPage = () => {
 
             setAccessMessage(`Access granted successfully to ${emails.length} student(s)!`);
             setAccessEmail('');
-            // Keep the course code as the user might want to add more batches for the same course
-            // setAccessCode(''); 
         } catch (error) {
-            // Check for specific error (e.g., duplicate key) if possible, but generic message is fine for now
             console.error(error);
             setAccessMessage('Error granting access: ' + error.message);
+        }
+    };
+
+    const grantSpecialAccess = async (e) => {
+        e.preventDefault();
+        setSpecialMessage('');
+
+        if (!specialEmail || !specialCode) return;
+
+        if (!specialCode.toUpperCase().startsWith('SC')) {
+            setSpecialMessage('Error: Special course codes must start with "SC"');
+            return;
+        }
+
+        // Split emails by comma or newline
+        const emails = specialEmail
+            .split(/[\n,]/)
+            .map(email => email.trim())
+            .filter(email => email !== '');
+
+        if (emails.length === 0) {
+            setSpecialMessage('Please enter at least one valid email address.');
+            return;
+        }
+
+        try {
+            const insertData = emails.map(email => ({
+                email: email,
+                course_code: specialCode.toUpperCase()
+            }));
+
+            const { error } = await supabase
+                .from('student_access')
+                .insert(insertData);
+
+            if (error) throw error;
+
+            setSpecialMessage(`Special access granted successfully to ${emails.length} student(s)!`);
+            setSpecialEmail('');
+            setSpecialCode('');
+        } catch (error) {
+            console.error(error);
+            setSpecialMessage('Error granting special access: ' + error.message);
         }
     };
 
@@ -206,8 +251,57 @@ const ControlPanelPage = () => {
                     </form>
                 </div>
 
+                {/* Special Course Access Card */}
+                <div style={{ background: 'white', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)' }}>
+                    <h3 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <Shield size={20} className="text-primary" />
+                        Special Course Access
+                    </h3>
+                    <form onSubmit={grantSpecialAccess}>
+                        <div style={{ marginBottom: '1rem' }}>
+                            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Student Emails (comma/newline separated)</label>
+                            <textarea
+                                value={specialEmail}
+                                onChange={(e) => setSpecialEmail(e.target.value)}
+                                placeholder="student@gmail.com"
+                                style={{
+                                    width: '100%',
+                                    padding: '0.8rem',
+                                    borderRadius: 'var(--radius-md)',
+                                    border: '1px solid var(--color-border)',
+                                    fontSize: '1rem',
+                                    minHeight: '100px',
+                                    resize: 'vertical'
+                                }}
+                                required
+                            />
+                        </div>
+                        <div style={{ marginBottom: '1rem' }}>
+                            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Special Code (Starts with SC)</label>
+                            <input
+                                type="text"
+                                value={specialCode}
+                                onChange={(e) => setSpecialCode(e.target.value)}
+                                placeholder="e.g. SC-CAREER-01"
+                                style={{
+                                    width: '100%',
+                                    padding: '0.8rem',
+                                    borderRadius: 'var(--radius-md)',
+                                    border: '1px solid var(--color-border)',
+                                    fontSize: '1rem'
+                                }}
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary w-full" style={{ backgroundColor: 'var(--cc-navy, #002f5d)' }}>
+                            Unlock Special Course
+                        </button>
+                        {specialMessage && <p style={{ marginTop: '1rem', color: specialMessage.includes('Error') ? 'red' : 'green', fontSize: '0.9rem' }}>{specialMessage}</p>}
+                    </form>
+                </div>
+
                 {/* Employee List Card */}
-                <div style={{ gridColumn: 'span 2', background: 'white', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)' }}>
+                <div style={{ gridColumn: '1 / -1', background: 'white', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)' }}>
                     <h3 style={{ marginBottom: '1.5rem' }}>Authorized Employees</h3>
 
                     {loading ? (
