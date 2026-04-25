@@ -67,7 +67,7 @@ const PremiumCarousel = () => {
                             {slide.hasButton && (
                                 <button 
                                     className="premium-register-btn"
-                                    onClick={() => window.open('https://forms.gle/VFtvMwsHvWE2MEMs8', '_blank')}
+                                    onClick={() => navigate('/career-counselling')}
                                 >
                                     REGISTER NOW!
                                 </button>

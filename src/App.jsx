@@ -21,6 +21,7 @@ const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 const CoursePlayerPage = React.lazy(() => import('./pages/CoursePlayerPage'));
 const MyCoursesPage = React.lazy(() => import('./pages/MyCoursesPage'));
 const AboutUsPage = React.lazy(() => import('./pages/AboutUsPage'));
+const CareerCounsellingPage = React.lazy(() => import('./pages/CareerCounsellingPage'));
 
 // Protected Route Component
 const ProtectedRoute = ({ children, requireHost }) => {
@@ -65,6 +66,7 @@ function App() {
                     </PublicRoute>
                   } />
                   <Route path="/about" element={<AboutUsPage />} />
+                  <Route path="/career-counselling" element={<CareerCounsellingPage />} />
                   <Route path="/home" element={
                     <ProtectedRoute>
                       <HomePage />
