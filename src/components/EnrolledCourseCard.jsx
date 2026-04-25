@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlayCircle, Clock, Calendar, Info } from 'lucide-react';
+import { PlayCircle, Clock, Calendar, Info, GraduationCap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const EnrolledCourseCard = ({ course, progress = 0 }) => {
@@ -33,14 +33,15 @@ const EnrolledCourseCard = ({ course, progress = 0 }) => {
                 <div style={{
                     minWidth: '60px',
                     height: '60px',
-                    background: 'linear-gradient(135deg, #1e293b, #334155)', // Dark/Techy background
+                    background: course.isSpecial ? 'linear-gradient(135deg, #002f5d, #004a8f)' : 'linear-gradient(135deg, #1e293b, #334155)',
                     borderRadius: '12px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '1.5rem'
+                    fontSize: '1.5rem',
+                    color: 'white'
                 }}>
-                    🏆
+                    {course.isSpecial ? <GraduationCap size={32} /> : '🏆'}
                 </div>
 
                 <div style={{ flex: 1 }}>
@@ -93,7 +94,13 @@ const EnrolledCourseCard = ({ course, progress = 0 }) => {
             </div>
 
             <button
-                onClick={() => navigate(`/course/${course.code}`)}
+                onClick={() => {
+                    if (course.isSpecial) {
+                        navigate('/career-counselling/course');
+                    } else {
+                        navigate(`/course/${course.code}`);
+                    }
+                }}
                 style={{
                     width: '100%',
                     padding: '12px',

@@ -25,7 +25,17 @@ const MyCoursesPage = () => {
                 if (data) {
                     const codes = data.map(item => item.course_code);
                     const userCourses = paidCourses.filter(course => codes.includes(course.code));
-                    setEnrolledCourses(userCourses);
+                    
+                    // Add special courses (SC codes)
+                    const scCodes = codes.filter(code => code.toUpperCase().startsWith('SC'));
+                    const scCourses = scCodes.map(code => ({
+                        code: code,
+                        title: "Career Counselling Course",
+                        thumbnail: "special_course_thumb", // Placeholder
+                        isSpecial: true
+                    }));
+
+                    setEnrolledCourses([...userCourses, ...scCourses]);
                 }
             } catch (error) {
                 console.error('Error fetching courses:', error);
