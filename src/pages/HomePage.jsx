@@ -6,6 +6,7 @@ import SEO from '../components/SEO';
 import ContactButton from '../components/ContactButton';
 import DetailedFooter from '../components/DetailedFooter';
 import HomeCarousel from '../components/HomeCarousel';
+import PremiumCarousel from '../components/PremiumCarousel';
 import InfoBanner from '../components/InfoBanner';
 import StudentFeedback from '../components/StudentFeedback';
 import SocialCTA from '../components/SocialCTA';
@@ -73,6 +74,7 @@ const HomePage = () => {
                         <p>Join live classes and webinars.</p>
                     </div>
                 </div>
+                <PremiumCarousel />
                 <HomeCarousel />
                 <div className="info-banner-wrapper">
                     <InfoBanner />
