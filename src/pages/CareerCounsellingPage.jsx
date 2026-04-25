@@ -42,9 +42,7 @@ const CareerCounsellingPage = () => {
 
     const handleRegisterClick = () => {
         if (hasSpecialAccess) {
-            // Future subpage details to be provided by user
-            alert("Special Course Unlocked! Subpage details coming soon.");
-            // navigate('/special-course-subpage');
+            navigate('/career-counselling/course');
         } else {
             window.open('https://forms.gle/HsNiQJkpwwo5Vsva8', '_blank');
         }
