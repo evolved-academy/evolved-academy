@@ -18,10 +18,14 @@ const MyCoursesPage = () => {
 
             try {
                 const username = user.username || (user.email ? user.email.split('@')[0] : '');
+                const emailQuery = user.email ? `email.ilike.${user.email}` : '';
+                const usernameQuery = username ? `email.ilike.${username}` : '';
+                const orCondition = [emailQuery, usernameQuery].filter(Boolean).join(',');
+
                 const { data, error } = await supabase
                     .from('student_access')
                     .select('course_code')
-                    .or(`email.eq.${user.email},email.eq.${username}`);
+                    .or(orCondition);
 
                 if (data) {
                     const codes = data.map(item => item.course_code);

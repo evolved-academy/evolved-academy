@@ -35,18 +35,27 @@ export const AuthProvider = ({ children }) => {
       const username = authUser.user_metadata?.username || (authUser.email ? authUser.email.split('@')[0] : '');
       const userWithUsername = { ...authUser, username };
 
-      const { data } = await supabase
-        .from('employees')
-        .select('*')
-        .or(`email.eq.${authUser.email},email.eq.${username}`)
-        .maybeSingle();
+      const emailQuery = authUser.email ? `email.ilike.${authUser.email}` : '';
+      const usernameQuery = username ? `email.ilike.${username}` : '';
+      const orCondition = [emailQuery, usernameQuery].filter(Boolean).join(',');
 
-      if (data) {
-        setUser({ ...userWithUsername, role: data.role || 'viewer' });
+      let query = supabase.from('employees').select('*');
+      if (orCondition) {
+        query = query.or(orCondition);
+      }
+      const { data, error } = await query.limit(1);
+
+      if (error) {
+        console.error('Error fetching employee role:', error);
+      }
+
+      if (data && data.length > 0) {
+        setUser({ ...userWithUsername, role: data[0].role || 'viewer' });
       } else {
         setUser({ ...userWithUsername, role: 'student' });
       }
     } catch (error) {
+      console.error('Error in checkEmployeeRole:', error);
       const username = authUser.user_metadata?.username || (authUser.email ? authUser.email.split('@')[0] : '');
       setUser({ ...authUser, username, role: 'student' });
     } finally {
