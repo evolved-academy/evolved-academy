@@ -32,54 +32,91 @@ export const AuthProvider = ({ children }) => {
 
   const checkEmployeeRole = async (authUser) => {
     try {
-      const { data, error } = await supabase
+      const username = authUser.user_metadata?.username || (authUser.email ? authUser.email.split('@')[0] : '');
+      const userWithUsername = { ...authUser, username };
+
+      const { data } = await supabase
         .from('employees')
         .select('*')
-        .eq('email', authUser.email)
-        .single();
+        .or(`email.eq.${authUser.email},email.eq.${username}`)
+        .maybeSingle();
 
-      // If found in employees table, add role property
       if (data) {
-        setUser({ ...authUser, role: data.role || 'viewer' });
+        setUser({ ...userWithUsername, role: data.role || 'viewer' });
       } else {
-        setUser({ ...authUser, role: 'student' });
+        setUser({ ...userWithUsername, role: 'student' });
       }
     } catch (error) {
-      // If error (or not found), default to student
-      setUser({ ...authUser, role: 'student' });
+      const username = authUser.user_metadata?.username || (authUser.email ? authUser.email.split('@')[0] : '');
+      setUser({ ...authUser, username, role: 'student' });
     } finally {
       setLoading(false);
     }
   };
 
+  const formatUsernameToEmail = (username) => {
+    const clean = username.trim().toLowerCase().replace(/\s+/g, '');
+    if (clean.includes('@')) return clean;
+    return `${clean}@evolved.app`;
+  };
 
+  const loginWithUsername = async (username, password) => {
+    const cleanUsername = username.trim().toLowerCase().replace(/\s+/g, '');
+    const internalEmail = formatUsernameToEmail(cleanUsername);
 
-  const loginWithEmail = async (email, password) => {
     try {
       const { error } = await supabase.auth.signInWithPassword({
-        email,
+        email: internalEmail,
         password,
       });
-      if (error) throw error;
+      if (error) {
+        if (error.code === 'email_not_confirmed' || error.message?.toLowerCase().includes('email not confirmed')) {
+          throw new Error("Please disable 'Confirm email' in Supabase Dashboard (Authentication > Providers > Email) to allow instant username logins.");
+        }
+        throw new Error("Invalid username or password.");
+      }
     } catch (error) {
-      console.error("Error logging in with Email:", error.message);
+      console.error("Error logging in:", error.message);
       throw error;
     }
   };
 
-  const signUpWithEmail = async (email, password, fullName) => {
+  const signUpWithUsername = async (username, password, fullName) => {
+    const cleanUsername = username.trim().toLowerCase().replace(/\s+/g, '');
+    const internalEmail = formatUsernameToEmail(cleanUsername);
+
     try {
-      const { error } = await supabase.auth.signUp({
-        email,
+      const { data, error } = await supabase.auth.signUp({
+        email: internalEmail,
         password,
         options: {
           data: {
+            username: cleanUsername,
             full_name: fullName,
           },
         },
       });
-      if (error) throw error;
-      // alert("Sign up successful! Please check your email for verification."); 
+
+      if (error) {
+        if (error.message.includes("already registered") || error.status === 422) {
+          throw new Error(`Username "${cleanUsername}" is already taken. Please choose another username.`);
+        }
+        throw error;
+      }
+
+      // If session was not established automatically (e.g. Supabase confirmation settings), sign in directly
+      if (!data?.session) {
+        const { error: signInErr } = await supabase.auth.signInWithPassword({
+          email: internalEmail,
+          password,
+        });
+        if (signInErr) {
+          if (signInErr.code === 'email_not_confirmed' || signInErr.message?.toLowerCase().includes('email not confirmed')) {
+            throw new Error("Instant username sign-up requires 'Confirm email' to be turned OFF in your Supabase project (Authentication -> Providers -> Email).");
+          }
+          throw signInErr;
+        }
+      }
     } catch (error) {
       console.error("Error signing up:", error.message);
       throw error;
@@ -95,35 +132,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  /*
-  const deleteAccount = async () => {
-    try {
-      // Attempt to call a database function to delete the user if it exists
-      // This is the standard way to handle safe deletion from the client
-      const { error } = await supabase.rpc('delete_user_account');
-
-      if (error) {
-        // Fallback: If RPC doesn't exist, just sign out for now to satisfy the UI flow
-        // In a real production app, you'd need a backend function for this.
-        console.warn("Account deletion RPC not found, signing out instead:", error.message);
-        await logout();
-      } else {
-        await logout();
-      }
-    } catch (error) {
-      console.error("Error deleting account:", error.message);
-      throw error;
-    }
-  };
-  */
-
   const value = {
     isAuthenticated: !!user,
     user,
-    loginWithEmail,
-    signUpWithEmail,
+    loginWithUsername,
+    signUpWithUsername,
+    loginWithEmail: loginWithUsername,
+    signUpWithEmail: signUpWithUsername,
     logout,
-    // deleteAccount,
     loading
   };
 

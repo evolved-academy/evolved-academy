@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { useAuth } from '../context/AuthContext';
-import { Trash2, UserPlus, Shield, Key } from 'lucide-react';
+import { Trash2, UserPlus, Shield, Key, CheckCircle2, BookOpen } from 'lucide-react';
+import { paidCourses } from '../data/courses';
 
 const ControlPanelPage = () => {
     const { user } = useAuth();
     const [employees, setEmployees] = useState([]);
-    const [newEmail, setNewEmail] = useState('');
+    const [newEmployeeUsername, setNewEmployeeUsername] = useState('');
+    const [newEmployeeRole, setNewEmployeeRole] = useState('admin');
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
 
-    // Grant Access State
-    const [accessEmail, setAccessEmail] = useState('');
+    // Grant Access State (Usernames)
+    const [accessUsernames, setAccessUsernames] = useState('');
     const [accessCode, setAccessCode] = useState('');
     const [accessMessage, setAccessMessage] = useState('');
-
-    // Special Course Access State
-    const [specialEmail, setSpecialEmail] = useState('');
-    const [specialCode, setSpecialCode] = useState('');
-    const [specialMessage, setSpecialMessage] = useState('');
+    const [accessLoading, setAccessLoading] = useState(false);
 
     useEffect(() => {
         fetchEmployees();
@@ -44,17 +42,22 @@ const ControlPanelPage = () => {
         e.preventDefault();
         setMessage('');
 
-        if (!newEmail) return;
+        const cleanUsername = newEmployeeUsername.trim().toLowerCase().replace(/\s+/g, '');
+        if (!cleanUsername) return;
 
         try {
+            const internalEmail = cleanUsername.includes('@') ? cleanUsername : `${cleanUsername}@evolved.app`;
             const { error } = await supabase
                 .from('employees')
-                .insert([{ email: newEmail, role: 'editor' }]);
+                .insert([
+                    { email: cleanUsername, role: newEmployeeRole },
+                    { email: internalEmail, role: newEmployeeRole }
+                ]);
 
             if (error) throw error;
 
-            setMessage('Employee added successfully!');
-            setNewEmail('');
+            setMessage(`"${cleanUsername}" added as ${newEmployeeRole.toUpperCase()} successfully!`);
+            setNewEmployeeUsername('');
             fetchEmployees();
         } catch (error) {
             setMessage('Error adding employee: ' + error.message);
@@ -65,25 +68,43 @@ const ControlPanelPage = () => {
         e.preventDefault();
         setAccessMessage('');
 
-        if (!accessEmail || !accessCode) return;
-
-        // Split emails by comma or newline, trim whitespace, and filter out empty strings
-        const emails = accessEmail
-            .split(/[\n,]/)
-            .map(email => email.trim())
-            .filter(email => email !== '');
-
-        if (emails.length === 0) {
-            setAccessMessage('Please enter at least one valid email address.');
+        const code = accessCode.trim().toUpperCase();
+        if (!accessUsernames.trim() || !code) {
+            setAccessMessage('Please provide both student username(s) and a course code.');
             return;
         }
 
+        // Split usernames by comma or newline, trim whitespace, remove extra spaces
+        const entries = accessUsernames
+            .split(/[\n,]/)
+            .map(item => item.trim().toLowerCase().replace(/\s+/g, ''))
+            .filter(item => item !== '');
+
+        if (entries.length === 0) {
+            setAccessMessage('Please enter at least one valid username.');
+            return;
+        }
+
+        setAccessLoading(true);
+
         try {
-            // Prepare the data for bulk insertion
-            const insertData = emails.map(email => ({
-                email: email,
-                course_code: accessCode
-            }));
+            // Prepare data for bulk insertion (both plain username and synthetic internal email for maximum compatibility)
+            const insertData = [];
+            const addedSet = new Set();
+
+            entries.forEach(username => {
+                const internalEmail = username.includes('@') ? username : `${username}@evolved.app`;
+
+                if (!addedSet.has(username)) {
+                    insertData.push({ email: username, course_code: code });
+                    addedSet.add(username);
+                }
+
+                if (!addedSet.has(internalEmail)) {
+                    insertData.push({ email: internalEmail, course_code: code });
+                    addedSet.add(internalEmail);
+                }
+            });
 
             const { error } = await supabase
                 .from('student_access')
@@ -91,54 +112,13 @@ const ControlPanelPage = () => {
 
             if (error) throw error;
 
-            setAccessMessage(`Access granted successfully to ${emails.length} student(s)!`);
-            setAccessEmail('');
+            setAccessMessage(`Success: Unlocked course "${code}" for ${entries.length} student(s): ${entries.join(', ')}`);
+            setAccessUsernames('');
         } catch (error) {
             console.error(error);
             setAccessMessage('Error granting access: ' + error.message);
-        }
-    };
-
-    const grantSpecialAccess = async (e) => {
-        e.preventDefault();
-        setSpecialMessage('');
-
-        if (!specialEmail || !specialCode) return;
-
-        if (!specialCode.toUpperCase().startsWith('SC')) {
-            setSpecialMessage('Error: Special course codes must start with "SC"');
-            return;
-        }
-
-        // Split emails by comma or newline
-        const emails = specialEmail
-            .split(/[\n,]/)
-            .map(email => email.trim())
-            .filter(email => email !== '');
-
-        if (emails.length === 0) {
-            setSpecialMessage('Please enter at least one valid email address.');
-            return;
-        }
-
-        try {
-            const insertData = emails.map(email => ({
-                email: email,
-                course_code: specialCode.toUpperCase()
-            }));
-
-            const { error } = await supabase
-                .from('student_access')
-                .insert(insertData);
-
-            if (error) throw error;
-
-            setSpecialMessage(`Special access granted successfully to ${emails.length} student(s)!`);
-            setSpecialEmail('');
-            setSpecialCode('');
-        } catch (error) {
-            console.error(error);
-            setSpecialMessage('Error granting special access: ' + error.message);
+        } finally {
+            setAccessLoading(false);
         }
     };
 
@@ -166,168 +146,219 @@ const ControlPanelPage = () => {
                     Admin Control Panel
                 </h1>
                 <p style={{ color: 'var(--color-text-light)' }}>
-                    Manage access permissions for your team.
+                    Unlock courses for students by their unique usernames and manage team permissions.
                 </p>
             </div>
 
             <div className="course-grid">
-                {/* Add Employee Card */}
-                <div style={{ background: 'white', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <UserPlus size={20} />
-                        Add New Employee
-                    </h3>
-                    <form onSubmit={addEmployee}>
-                        <div style={{ marginBottom: '1rem' }}>
-                            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Gmail Address</label>
-                            <input
-                                type="email"
-                                value={newEmail}
-                                onChange={(e) => setNewEmail(e.target.value)}
-                                placeholder="employee@gmail.com"
-                                style={{
-                                    width: '100%',
-                                    padding: '0.8rem',
-                                    borderRadius: 'var(--radius-md)',
-                                    border: '1px solid var(--color-border)',
-                                    fontSize: '1rem'
-                                }}
-                                required
-                            />
-                        </div>
-                        <button type="submit" className="btn btn-primary w-full">
-                            Grant Access
-                        </button>
-                        {message && <p style={{ marginTop: '1rem', color: message.includes('Error') ? 'red' : 'green', fontSize: '0.9rem' }}>{message}</p>}
-                    </form>
-                </div>
-
-                {/* Grant Access Card */}
-                <div style={{ background: 'white', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <Key size={20} />
-                        Grant Course Access
+                {/* Grant Access Card (Usernames) */}
+                <div style={{ background: 'white', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--color-border)' }}>
+                    <h3 style={{ marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-primary)' }}>
+                        <Key size={22} />
+                        Unlock Course by Username
                     </h3>
                     <form onSubmit={grantAccess}>
-                        <div style={{ marginBottom: '1rem' }}>
-                            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Student Emails (separate by comma or new line)</label>
+                        <div style={{ marginBottom: '1.25rem' }}>
+                            <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '600', fontSize: '0.9rem' }}>
+                                Student Usernames
+                            </label>
+                            <p style={{ fontSize: '0.8rem', color: 'var(--color-text-light)', marginBottom: '0.5rem' }}>
+                                Enter student username(s) separated by commas or new lines.
+                            </p>
                             <textarea
-                                value={accessEmail}
-                                onChange={(e) => setAccessEmail(e.target.value)}
-                                placeholder="student1@gmail.com, student2@gmail.com&#10;student3@gmail.com"
+                                value={accessUsernames}
+                                onChange={(e) => setAccessUsernames(e.target.value)}
+                                placeholder="e.g. fatema, rahul123&#10;keshav_a"
                                 style={{
                                     width: '100%',
                                     padding: '0.8rem',
                                     borderRadius: 'var(--radius-md)',
                                     border: '1px solid var(--color-border)',
-                                    fontSize: '1rem',
-                                    minHeight: '100px',
-                                    resize: 'vertical'
+                                    fontSize: '0.95rem',
+                                    minHeight: '110px',
+                                    resize: 'vertical',
+                                    fontFamily: 'monospace'
                                 }}
                                 required
                             />
                         </div>
-                        <div style={{ marginBottom: '1rem' }}>
-                            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Course Code</label>
+
+                        <div style={{ marginBottom: '1.25rem' }}>
+                            <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '600', fontSize: '0.9rem' }}>
+                                Course Code
+                            </label>
                             <input
                                 type="text"
                                 value={accessCode}
                                 onChange={(e) => setAccessCode(e.target.value)}
-                                placeholder="e.g. EATSFS0126"
+                                placeholder="e.g. EATSAI0526"
                                 style={{
                                     width: '100%',
                                     padding: '0.8rem',
                                     borderRadius: 'var(--radius-md)',
                                     border: '1px solid var(--color-border)',
-                                    fontSize: '1rem'
+                                    fontSize: '0.95rem',
+                                    fontFamily: 'monospace',
+                                    textTransform: 'uppercase'
                                 }}
                                 required
                             />
+
+                            {/* Quick Select Courses */}
+                            {paidCourses.length > 0 && (
+                                <div style={{ marginTop: '0.6rem', display: 'flex', flexWrap: 'wrap', gap: '0.4rem', alignItems: 'center' }}>
+                                    <span style={{ fontSize: '0.75rem', color: '#666' }}>Quick pick:</span>
+                                    {paidCourses.map((c) => (
+                                        <button
+                                            key={c.code}
+                                            type="button"
+                                            onClick={() => setAccessCode(c.code)}
+                                            style={{
+                                                fontSize: '0.75rem',
+                                                padding: '0.2rem 0.5rem',
+                                                borderRadius: '4px',
+                                                background: accessCode === c.code ? 'var(--color-primary)' : '#f1f5f9',
+                                                color: accessCode === c.code ? '#fff' : '#334155',
+                                                border: '1px solid #cbd5e1',
+                                                cursor: 'pointer'
+                                            }}
+                                        >
+                                            {c.title} ({c.code})
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
                         </div>
-                        <button type="submit" className="btn btn-primary w-full">
-                            Unlock Course
+
+                        <button 
+                            type="submit" 
+                            className="btn btn-primary w-full"
+                            disabled={accessLoading}
+                        >
+                            {accessLoading ? 'Unlocking...' : 'Unlock Course for Student(s)'}
                         </button>
-                        {accessMessage && <p style={{ marginTop: '1rem', color: accessMessage.includes('Error') ? 'red' : 'green', fontSize: '0.9rem' }}>{accessMessage}</p>}
+                        
+                        {accessMessage && (
+                            <p style={{
+                                marginTop: '1rem',
+                                padding: '0.75rem',
+                                borderRadius: 'var(--radius-md)',
+                                background: accessMessage.includes('Error') ? '#fef2f2' : '#f0fdf4',
+                                color: accessMessage.includes('Error') ? '#dc2626' : '#16a34a',
+                                fontSize: '0.88rem',
+                                fontWeight: '500',
+                                border: `1px solid ${accessMessage.includes('Error') ? '#fecaca' : '#bbf7d0'}`
+                            }}>
+                                {accessMessage}
+                            </p>
+                        )}
                     </form>
                 </div>
 
-                {/* Special Course Access Card */}
-                <div style={{ background: 'white', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <Shield size={20} className="text-primary" />
-                        Special Course Access
+                {/* Add Employee Card */}
+                <div style={{ background: 'white', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--color-border)' }}>
+                    <h3 style={{ marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-primary)' }}>
+                        <UserPlus size={22} />
+                        Add Team Employee
                     </h3>
-                    <form onSubmit={grantSpecialAccess}>
-                        <div style={{ marginBottom: '1rem' }}>
-                            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Student Emails (comma/newline separated)</label>
-                            <textarea
-                                value={specialEmail}
-                                onChange={(e) => setSpecialEmail(e.target.value)}
-                                placeholder="student@gmail.com"
-                                style={{
-                                    width: '100%',
-                                    padding: '0.8rem',
-                                    borderRadius: 'var(--radius-md)',
-                                    border: '1px solid var(--color-border)',
-                                    fontSize: '1rem',
-                                    minHeight: '100px',
-                                    resize: 'vertical'
-                                }}
-                                required
-                            />
-                        </div>
-                        <div style={{ marginBottom: '1rem' }}>
-                            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Special Code (Starts with SC)</label>
+                    <form onSubmit={addEmployee}>
+                        <div style={{ marginBottom: '1.25rem' }}>
+                            <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '600', fontSize: '0.9rem' }}>
+                                Employee Username
+                            </label>
+                            <p style={{ fontSize: '0.8rem', color: 'var(--color-text-light)', marginBottom: '0.5rem' }}>
+                                Enter username to give control panel editor permissions.
+                            </p>
                             <input
                                 type="text"
-                                value={specialCode}
-                                onChange={(e) => setSpecialCode(e.target.value)}
-                                placeholder="e.g. SC-CAREER-199 or SC-CAREER-399"
+                                value={newEmployeeUsername}
+                                onChange={(e) => setNewEmployeeUsername(e.target.value)}
+                                placeholder="e.g. employee_user"
                                 style={{
                                     width: '100%',
                                     padding: '0.8rem',
                                     borderRadius: 'var(--radius-md)',
                                     border: '1px solid var(--color-border)',
-                                    fontSize: '1rem'
+                                    fontSize: '0.95rem'
                                 }}
                                 required
                             />
                         </div>
-                        <button type="submit" className="btn btn-primary w-full" style={{ backgroundColor: 'var(--cc-navy, #002f5d)' }}>
-                            Unlock Special Course
+                        <div style={{ marginBottom: '1.25rem' }}>
+                            <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '600', fontSize: '0.9rem' }}>
+                                Role Permission
+                            </label>
+                            <select
+                                value={newEmployeeRole}
+                                onChange={(e) => setNewEmployeeRole(e.target.value)}
+                                style={{
+                                    width: '100%',
+                                    padding: '0.8rem',
+                                    borderRadius: 'var(--radius-md)',
+                                    border: '1px solid var(--color-border)',
+                                    fontSize: '0.95rem',
+                                    background: 'white'
+                                }}
+                            >
+                                <option value="admin">Admin (Full Control Panel & Management)</option>
+                                <option value="editor">Editor (Course Management)</option>
+                            </select>
+                        </div>
+                        <button type="submit" className="btn btn-primary w-full">
+                            Grant {newEmployeeRole.toUpperCase()} Access
                         </button>
-                        {specialMessage && <p style={{ marginTop: '1rem', color: specialMessage.includes('Error') ? 'red' : 'green', fontSize: '0.9rem' }}>{specialMessage}</p>}
+                        {message && (
+                            <p style={{
+                                marginTop: '1rem',
+                                padding: '0.75rem',
+                                borderRadius: 'var(--radius-md)',
+                                background: message.includes('Error') ? '#fef2f2' : '#f0fdf4',
+                                color: message.includes('Error') ? '#dc2626' : '#16a34a',
+                                fontSize: '0.88rem',
+                                fontWeight: '500',
+                                border: `1px solid ${message.includes('Error') ? '#fecaca' : '#bbf7d0'}`
+                            }}>
+                                {message}
+                            </p>
+                        )}
                     </form>
                 </div>
 
-                {/* Employee List Card */}
-                <div style={{ gridColumn: '1 / -1', background: 'white', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ marginBottom: '1.5rem' }}>Authorized Employees</h3>
+                {/* Authorized Employees List */}
+                <div style={{ gridColumn: '1 / -1', background: 'white', padding: '2rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--color-border)' }}>
+                    <h3 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <Shield size={20} />
+                        Authorized Employees
+                    </h3>
 
                     {loading ? (
-                        <p>Loading...</p>
+                        <p>Loading employees...</p>
                     ) : employees.length === 0 ? (
                         <p style={{ color: '#888', fontStyle: 'italic' }}>No employees added yet.</p>
                     ) : (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                             {employees.map((emp) => (
                                 <div key={emp.id} style={{
                                     display: 'flex',
                                     justifyContent: 'space-between',
                                     alignItems: 'center',
-                                    padding: '1rem',
+                                    padding: '0.85rem 1.25rem',
                                     background: 'var(--color-surface)',
-                                    borderRadius: 'var(--radius-md)'
+                                    borderRadius: 'var(--radius-md)',
+                                    border: '1px solid var(--color-border)'
                                 }}>
                                     <div>
-                                        <p style={{ fontWeight: '600' }}>{emp.email}</p>
+                                        <p style={{ fontWeight: '600', margin: 0, fontSize: '0.95rem' }}>{emp.email}</p>
                                         <span style={{
-                                            fontSize: '0.8rem',
-                                            background: '#e0e7ff',
-                                            color: '#3730a3',
-                                            padding: '0.2rem 0.6rem',
+                                            fontSize: '0.75rem',
+                                            background: emp.role === 'admin' ? '#fef3c7' : '#e0e7ff',
+                                            color: emp.role === 'admin' ? '#92400e' : '#3730a3',
+                                            padding: '0.15rem 0.5rem',
                                             borderRadius: '1rem',
-                                            textTransform: 'capitalize'
+                                            textTransform: 'capitalize',
+                                            fontWeight: '600',
+                                            display: 'inline-block',
+                                            marginTop: '0.25rem'
                                         }}>
                                             {emp.role}
                                         </span>
@@ -335,10 +366,10 @@ const ControlPanelPage = () => {
                                     <button
                                         onClick={() => removeEmployee(emp.id)}
                                         className="btn"
-                                        style={{ color: '#ef4444', padding: '0.5rem' }}
+                                        style={{ color: '#ef4444', padding: '0.4rem', border: 'none', background: 'transparent', cursor: 'pointer' }}
                                         title="Remove Access"
                                     >
-                                        <Trash2 size={20} />
+                                        <Trash2 size={18} />
                                     </button>
                                 </div>
                             ))}

@@ -5,6 +5,23 @@
     min-height: 100vh;
 }
 
+.sc-subpage .dashboard-welcome {
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.sc-subpage .dashboard-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .sc-subpage .card-icon {
     margin-bottom: 1.5rem;
     color: #002f5d;
@@ -40,12 +57,11 @@
     color: #64748b !important;
 }
 
-/* Inherit dashboard card styles but localized */
 .sc-subpage .dashboard-card {
     padding: 2.5rem 2rem;
     background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     border: 2px solid transparent;
@@ -53,12 +69,20 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    flex: 1;
+    min-width: 300px;
+    max-width: 450px;
 }
 
 .sc-subpage .dashboard-card:hover:not(.locked-card) {
     transform: translateY(-8px);
-    border-color: #002f5d;
-    box-shadow: 0 20px 40px rgba(0, 47, 93, 0.15);
+    border-color: #b71c1c;
+    box-shadow: 0 20px 40px rgba(183, 28, 28, 0.15);
+}
+
+.sc-subpage .dashboard-card:hover:not(.locked-card) h3,
+.sc-subpage .dashboard-card:hover:not(.locked-card) .card-icon {
+    color: #b71c1c;
 }
 
 .sc-subpage .dashboard-card h3 {

@@ -2,7 +2,7 @@ import React from 'react';
 import { PlayCircle, Clock, Calendar, Info, GraduationCap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const EnrolledCourseCard = ({ course, progress = 0 }) => {
+const EnrolledCourseCard = ({ course }) => {
     const navigate = useNavigate();
 
     return (
@@ -33,7 +33,7 @@ const EnrolledCourseCard = ({ course, progress = 0 }) => {
                 <div style={{
                     minWidth: '60px',
                     height: '60px',
-                    background: course.isSpecial ? 'linear-gradient(135deg, #002f5d, #004a8f)' : 'linear-gradient(135deg, #1e293b, #334155)',
+                    background: 'linear-gradient(135deg, #1e293b, #334155)',
                     borderRadius: '12px',
                     display: 'flex',
                     alignItems: 'center',
@@ -41,9 +41,8 @@ const EnrolledCourseCard = ({ course, progress = 0 }) => {
                     fontSize: '1.5rem',
                     color: 'white'
                 }}>
-                    {course.isSpecial ? <GraduationCap size={32} /> : '🏆'}
+                    🏆
                 </div>
-
                 <div style={{ flex: 1 }}>
                     <h3 style={{
                         margin: 0,
@@ -61,9 +60,8 @@ const EnrolledCourseCard = ({ course, progress = 0 }) => {
                 </div>
             </div>
 
-            {/* Description Tooltip/Overlay (Simple version: text appearing on hover) */}
+            {/* Description Tooltip/Overlay */}
             <div className="course-description" title={course.description}>
-                {/* Using title attribute for simple native tooltip, or could build custom overlay */}
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: '#64748b' }}>
@@ -71,36 +69,8 @@ const EnrolledCourseCard = ({ course, progress = 0 }) => {
                 <span>Enrolled On 26th Jan 2026</span>
             </div>
 
-            <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#64748b', fontSize: '0.9rem' }}>
-                        <Info size={16} color="var(--color-primary)" />
-                        <span>Course Progress</span>
-                    </div>
-                    <span style={{ fontWeight: '600', color: '#16a34a' }}>{progress}%</span>
-                </div>
-
-                {/* Progress Bar Track */}
-                <div style={{ width: '100%', height: '8px', background: '#f1f5f9', borderRadius: '4px' }}>
-                    {/* Progress Bar Fill */}
-                    <div style={{
-                        width: `${progress}%`,
-                        height: '100%',
-                        background: '#16a34a', // Green progress
-                        borderRadius: '4px',
-                        transition: 'width 0.5s ease-out'
-                    }}></div>
-                </div>
-            </div>
-
             <button
-                onClick={() => {
-                    if (course.isSpecial) {
-                        navigate('/career-counselling/course');
-                    } else {
-                        navigate(`/course/${course.code}`);
-                    }
-                }}
+                onClick={() => navigate(`/course/${course.code}`)}
                 style={{
                     width: '100%',
                     padding: '12px',

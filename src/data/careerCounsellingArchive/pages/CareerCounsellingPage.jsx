@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Check, Lightbulb, Settings, UserCheck, GraduationCap } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
-import { supabase } from '../supabase';
-import SEO from '../components/SEO';
-import DetailedFooter from '../components/DetailedFooter';
+import { useAuth } from '../../../context/AuthContext';
+import { supabase } from '../../../supabase';
+import SEO from '../../../components/SEO';
+import DetailedFooter from '../../../components/DetailedFooter';
 import './CareerCounsellingPage.css';
 
 const CareerCounsellingPage = () => {
@@ -56,16 +55,6 @@ const CareerCounsellingPage = () => {
             />
 
             <header className="cc-hero">
-                <div className="bulb-1 cc-lightbulb">
-                    <Lightbulb size={32} fill="currentColor" />
-                </div>
-                <div className="bulb-2 cc-lightbulb">
-                    <Lightbulb size={32} fill="currentColor" />
-                </div>
-                <div className="cc-gears">
-                    <Settings size={120} />
-                </div>
-
                 <div className="cc-hero-banner">
                     <h1>Career Counselling Course</h1>
                 </div>
@@ -97,7 +86,7 @@ const CareerCounsellingPage = () => {
                             className="cc-main-register-btn"
                             onClick={handleRegisterClick}
                         >
-                            {hasSpecialAccess ? "LET'S START" : "REGISTER NOW!"}
+                            {hasSpecialAccess ? "LET'S START" : "FILL THE FORM"}
                         </button>
                     )}
                 </div>

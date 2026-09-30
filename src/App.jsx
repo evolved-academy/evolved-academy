@@ -21,8 +21,8 @@ const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 const CoursePlayerPage = React.lazy(() => import('./pages/CoursePlayerPage'));
 const MyCoursesPage = React.lazy(() => import('./pages/MyCoursesPage'));
 const AboutUsPage = React.lazy(() => import('./pages/AboutUsPage'));
-const CareerCounsellingPage = React.lazy(() => import('./pages/CareerCounsellingPage'));
-const CareerCourseSubPage = React.lazy(() => import('./pages/CareerCourseSubPage'));
+const LegalPage = React.lazy(() => import('./pages/LegalPage'));
+const UpdatePasswordPage = React.lazy(() => import('./pages/UpdatePasswordPage'));
 
 // Protected Route Component
 const ProtectedRoute = ({ children, requireHost }) => {
@@ -67,12 +67,7 @@ function App() {
                     </PublicRoute>
                   } />
                   <Route path="/about" element={<AboutUsPage />} />
-                   <Route path="/career-counselling" element={<CareerCounsellingPage />} />
-                   <Route path="/career-counselling/course" element={
-                     <ProtectedRoute>
-                       <CareerCourseSubPage />
-                     </ProtectedRoute>
-                   } />
+                  <Route path="/legal" element={<LegalPage />} />
                   <Route path="/home" element={
                     <ProtectedRoute>
                       <HomePage />
@@ -131,7 +126,8 @@ function App() {
                     </ProtectedRoute>
                   } />
 
-                  <Route path="*" element={<NotFoundPage />} />
+                   <Route path="/update-password" element={<UpdatePasswordPage />} />
+                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </Suspense>
             </main>

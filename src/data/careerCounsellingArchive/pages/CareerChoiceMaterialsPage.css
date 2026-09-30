@@ -1,0 +1,178 @@
+/* src/data/careerCounsellingArchive/pages/CareerChoiceMaterialsPage.css */
+
+.materials-page {
+    background: linear-gradient(135deg, #bdf7ff 0%, #6abce4 100%) !important;
+    min-height: 100vh;
+}
+
+.materials-container {
+    padding: 3rem 1rem 5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.materials-page .back-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    color: #002f5d;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.materials-page .back-btn:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.materials-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.materials-header h1 {
+    font-size: 2.5rem;
+    color: #002f5d;
+    margin-bottom: 1rem;
+    font-weight: 800;
+}
+
+.materials-header p {
+    color: #475569;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.materials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+@media (max-width: 1024px) {
+    .materials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .materials-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.material-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.material-card:hover {
+    transform: translateY(-8px);
+    border-color: #b71c1c;
+    box-shadow: 0 20px 40px rgba(183, 28, 28, 0.15);
+}
+
+.material-thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: #f1f5f9;
+    overflow: hidden;
+}
+
+.material-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.material-card:hover .material-thumbnail img {
+    transform: scale(1.05);
+}
+
+.material-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 47, 93, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.material-card:hover .material-overlay {
+    opacity: 1;
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    color: #002f5d;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateY(20px);
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.material-card:hover .download-btn {
+    transform: translateY(0);
+}
+
+.download-btn:hover {
+    background: #b71c1c;
+    color: white;
+}
+
+.material-info {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+}
+
+.material-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #f1f5f9;
+    color: #002f5d;
+    border-radius: 10px;
+    flex-shrink: 0;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.material-card:hover .material-icon {
+    background: #b71c1c;
+    color: white;
+}
+
+.material-title {
+    font-size: 1.1rem;
+    color: #002f5d;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.4;
+}

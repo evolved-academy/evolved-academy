@@ -17,25 +17,16 @@ const MyCoursesPage = () => {
             if (!user?.email) return;
 
             try {
+                const username = user.username || (user.email ? user.email.split('@')[0] : '');
                 const { data, error } = await supabase
                     .from('student_access')
                     .select('course_code')
-                    .eq('email', user.email);
+                    .or(`email.eq.${user.email},email.eq.${username}`);
 
                 if (data) {
                     const codes = data.map(item => item.course_code);
                     const userCourses = paidCourses.filter(course => codes.includes(course.code));
-                    
-                    // Add special courses (SC codes)
-                    const scCodes = codes.filter(code => code.toUpperCase().startsWith('SC'));
-                    const scCourses = scCodes.map(code => ({
-                        code: code,
-                        title: "Career Counselling Course",
-                        thumbnail: "special_course_thumb", // Placeholder
-                        isSpecial: true
-                    }));
-
-                    setEnrolledCourses([...userCourses, ...scCourses]);
+                    setEnrolledCourses(userCourses);
                 }
             } catch (error) {
                 console.error('Error fetching courses:', error);
@@ -106,8 +97,6 @@ const MyCoursesPage = () => {
                             <EnrolledCourseCard
                                 key={index}
                                 course={course}
-                                // Mocking different progress for demo
-                                progress={index === 0 ? 0 : index === 1 ? 26 : 65}
                             />
                         ))}
                     </div>

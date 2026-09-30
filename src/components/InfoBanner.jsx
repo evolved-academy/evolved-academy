@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PlayCircle, FileText, HelpCircle, Camera } from 'lucide-react';
 import './InfoBanner.css';
 
@@ -6,6 +7,7 @@ import taherSirImg from '../assets/taher-sir.png';
 import studentImg from '../assets/student-img.png';
 
 const InfoBanner = () => {
+    const navigate = useNavigate();
     return (
         <div className="info-banner-container">
             <div className="info-banner-content">
@@ -17,7 +19,7 @@ const InfoBanner = () => {
                     <p className="banner-subtext">
                         Unlock your potential by signing up with EvolvEd Academy - The most valuable learning solution.
                     </p>
-                    <button className="banner-cta">Get Started</button>
+                    <button className="banner-cta" onClick={() => navigate('/tech-skills/paid')}>Get Started</button>
                 </div>
 
                 {/* Right Visual Section */}

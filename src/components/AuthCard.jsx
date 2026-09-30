@@ -4,28 +4,51 @@ import { useNavigate } from 'react-router-dom';
 import './AuthCard.css';
 
 const AuthCard = () => {
-    const { loginWithEmail, signUpWithEmail } = useAuth();
+    const { loginWithUsername, signUpWithUsername } = useAuth();
     const navigate = useNavigate();
     const [isSignUp, setIsSignUp] = useState(false);
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [fullName, setFullName] = useState('');
     const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setMessage('');
+
+        const cleanUsername = username.trim().toLowerCase();
+        if (!cleanUsername) {
+            setError('Please enter a username.');
+            return;
+        }
+
+        if (cleanUsername.length < 3) {
+            setError('Username must be at least 3 characters long.');
+            return;
+        }
+
+        if (!/^[a-zA-Z0-9_.-]+$/.test(cleanUsername)) {
+            setError('Username can only contain letters, numbers, underscores, and hyphens (no spaces).');
+            return;
+        }
+
+        if (password.length < 6) {
+            setError('Password must be at least 6 characters long.');
+            return;
+        }
+
         try {
             if (isSignUp) {
-                await signUpWithEmail(email, password, fullName);
-                // Don't navigate, wait for email verification or show message
-                setIsSignUp(false); // Switch back to login
+                await signUpWithUsername(cleanUsername, password, fullName);
+                navigate('/home');
             } else {
-                await loginWithEmail(email, password);
+                await loginWithUsername(cleanUsername, password);
                 navigate('/home');
             }
         } catch (err) {
-            setError(err.message);
+            setError(err.message || 'An error occurred. Please try again.');
         }
     };
 
@@ -35,12 +58,26 @@ const AuthCard = () => {
                 {isSignUp ? 'Create Account' : 'Welcome Back'}
             </h2>
             <p className="auth-subtitle">
-                {isSignUp ? 'Join us to start learning' : 'Sign in to continue your learning journey'}
+                {isSignUp ? 'Choose a unique username to start learning' : 'Sign in with your username to continue'}
             </p>
 
-            {error && <p className="error-message" style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+            {error && <p className="error-message" style={{ color: '#ef4444', textAlign: 'center', marginBottom: '1rem', fontSize: '0.9rem', fontWeight: '500' }}>{error}</p>}
+            {message && <p className="success-message" style={{ color: '#10b981', textAlign: 'center', marginBottom: '1rem', fontSize: '0.9rem', fontWeight: '500' }}>{message}</p>}
 
             <form onSubmit={handleSubmit} className="auth-form">
+                <div className="form-group">
+                    <label htmlFor="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="e.g. john123"
+                        required
+                        autoComplete="username"
+                    />
+                </div>
+
                 {isSignUp && (
                     <div className="form-group">
                         <label htmlFor="fullName">Full Name</label>
@@ -56,18 +93,6 @@ const AuthCard = () => {
                 )}
 
                 <div className="form-group">
-                    <label htmlFor="email">Email Address</label>
-                    <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="you@example.com"
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"
@@ -76,25 +101,20 @@ const AuthCard = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
                         required
+                        autoComplete={isSignUp ? "new-password" : "current-password"}
                     />
                 </div>
 
-                {!isSignUp && (
-                    <div className="form-actions">
-                        <a href="#" className="forgot-password">Forgot Password?</a>
-                    </div>
-                )}
-
-                <button type="submit" className="btn btn-primary w-full">
-                    {isSignUp ? 'Sign Up' : 'Log In'}
+                <button type="submit" className="btn btn-primary w-full" style={{ marginTop: '0.5rem' }}>
+                    {isSignUp ? 'Create Account' : 'Log In'}
                 </button>
             </form>
 
-            <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+            <div style={{ textAlign: 'center', marginTop: '1.25rem' }}>
                 <p style={{ fontSize: '0.9rem', color: '#666' }}>
                     {isSignUp ? 'Already have an account?' : "Don't have an account?"} {' '}
                     <button
-                        onClick={() => { setIsSignUp(!isSignUp); setError(''); }}
+                        onClick={() => { setIsSignUp(!isSignUp); setError(''); setMessage(''); }}
                         style={{
                             background: 'none',
                             border: 'none',
@@ -109,7 +129,6 @@ const AuthCard = () => {
                     </button>
                 </p>
             </div>
-
         </div>
     );
 };

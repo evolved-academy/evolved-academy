@@ -165,38 +165,6 @@
     border-bottom: 4px solid var(--cc-gold);
 }
 
-/* Animations */
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-    100% { transform: translateY(0px); }
-}
-
-.cc-lightbulb {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background: var(--cc-gold);
-    border-radius: 50%;
-    box-shadow: 0 0 40px var(--cc-gold);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--cc-white);
-    animation: float 4s ease-in-out infinite;
-}
-
-.bulb-1 { top: 20%; left: 10%; animation-delay: 0s; }
-.bulb-2 { bottom: 15%; right: 10%; animation-delay: 2s; }
-
-.cc-gears {
-    position: absolute;
-    top: 10%;
-    right: 5%;
-    opacity: 0.2;
-    color: var(--cc-navy);
-}
-
 @media (max-width: 768px) {
     .cc-statements-card {
         padding: 2rem;

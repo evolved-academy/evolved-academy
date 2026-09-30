@@ -10,6 +10,19 @@ class ErrorBoundary extends Component {
   }
 
   static getDerivedStateFromError(error) {
+    // Detect Vite chunk load errors (stale cache after deployment)
+    const isChunkLoadError = error?.name === 'ChunkLoadError' || 
+                             (error?.message && error.message.includes('Failed to fetch dynamically imported module')) ||
+                             (error?.message && error.message.includes('Importing a module script failed'));
+                             
+    if (isChunkLoadError) {
+      if (!sessionStorage.getItem('chunk_load_reloaded')) {
+        sessionStorage.setItem('chunk_load_reloaded', 'true');
+        window.location.reload();
+        return { hasError: false, error: null }; // Let it reload
+      }
+    }
+    
     return { hasError: true, error };
   }
 

@@ -107,7 +107,12 @@ const DetailedFooter = () => {
             </div>
             {/* Copyright/Footer Bottom */}
             <div style={{ textAlign: 'center', marginTop: '3rem', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)', fontSize: '0.9rem', color: '#aaa' }}>
-                &copy; {new Date().getFullYear()} EvolvEd Academy. All rights reserved.
+                <p style={{ marginBottom: '1rem' }}>&copy; {new Date().getFullYear()} EvolvEd Academy. All rights reserved.</p>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', fontSize: '0.85rem' }}>
+                    <Link to="/legal" style={{ color: 'inherit', textDecoration: 'none' }}>Privacy Policy</Link>
+                    <Link to="/legal" style={{ color: 'inherit', textDecoration: 'none' }}>Terms of Service</Link>
+                    <Link to="/legal" style={{ color: 'inherit', textDecoration: 'none' }}>Contact Us</Link>
+                </div>
             </div>
         </div>
     );

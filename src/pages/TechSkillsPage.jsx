@@ -28,10 +28,11 @@ const PaidCourses = ({ isNonTech }) => {
 
     const checkAccess = async () => {
         try {
+            const username = user.username || (user.email ? user.email.split('@')[0] : '');
             const { data, error } = await supabase
                 .from('student_access')
                 .select('course_code')
-                .eq('email', user.email);
+                .or(`email.eq.${user.email},email.eq.${username}`);
 
             if (data) {
                 setUnlockedCodes(data.map(item => item.course_code));
