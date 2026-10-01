@@ -58,6 +58,62 @@
     color: #013667;
 }
 
+/* Jamali Classes 4th Card Styling */
+.home-page .dashboard-card.jamali-dashboard-card {
+    border: 2px solid #5a8c29;
+    background: linear-gradient(145deg, #ffffff 0%, #f4f9f0 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.home-page .dashboard-card.jamali-dashboard-card:hover {
+    border-color: #385718;
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(90, 140, 41, 0.25);
+}
+
+.home-page .dashboard-card.jamali-dashboard-card:hover h3 {
+    color: #385718;
+}
+
+.jamali-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.jamali-card-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+.jamali-card-badge {
+    background: linear-gradient(135deg, #5a8c29, #385718);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.jamali-card-action {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1rem;
+    color: #5a8c29;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.home-page .dashboard-card.jamali-dashboard-card:hover .jamali-card-action {
+    color: #385718;
+}
+
 /* Mobile Adjustments */
 @media (max-width: 768px) {
     .home-dashboard-container {

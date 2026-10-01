@@ -9,6 +9,9 @@ import HomeCarousel from '../components/HomeCarousel';
 import InfoBanner from '../components/InfoBanner';
 import StudentFeedback from '../components/StudentFeedback';
 import SocialCTA from '../components/SocialCTA';
+import { getStudentUnlockedCourses, hasUserJamaliAccess } from '../utils/accessControl';
+import jamaliLogo from '../assets/jamali_classes_logo.png';
+import { ExternalLink } from 'lucide-react';
 import './HomePage.css';
 
 
@@ -20,28 +23,14 @@ const HomePage = () => {
 
     useEffect(() => {
         const checkAccess = async () => {
-            if (!user?.email) {
+            if (!user) {
                 setLoading(false);
                 return;
             }
 
             try {
-                const username = user.username || (user.email ? user.email.split('@')[0] : '');
-                const emailQuery = user.email ? `email.ilike.${user.email}` : '';
-                const usernameQuery = username ? `email.ilike.${username}` : '';
-                const orCondition = [emailQuery, usernameQuery].filter(Boolean).join(',');
-
-                const { data, error } = await supabase
-                    .from('student_access')
-                    .select('course_code')
-                    .or(orCondition);
-
-                if (data && data.length > 0) {
-                    const allCodes = data.map(item => item.course_code);
-                    setUnlockedCourses(allCodes);
-                } else {
-                    setUnlockedCourses([]);
-                }
+                const courses = await getStudentUnlockedCourses(user);
+                setUnlockedCourses(courses);
             } catch (error) {
                 console.error('Error checking access:', error);
             } finally {
@@ -51,6 +40,8 @@ const HomePage = () => {
 
         checkAccess();
     }, [user]);
+
+    const hasJamaliAccess = hasUserJamaliAccess(user, unlockedCourses);
 
     const handleContinueLearning = () => {
         if (unlockedCourses.length > 0) {
@@ -71,7 +62,7 @@ const HomePage = () => {
                     Welcome to Your Dashboard!
                 </h1>
                 <div className="dashboard-grid">
-                    {/* Placeholder cards */}
+                    {/* Dashboard cards */}
                     <div className="dashboard-card" onClick={handleContinueLearning}>
                         <h3>Continue Learning</h3>
                         <p>Pick up where you left off in your courses.</p>
@@ -84,6 +75,22 @@ const HomePage = () => {
                         <h3>Upcoming Live Sessions</h3>
                         <p>Join live classes and webinars.</p>
                     </div>
+
+                    {/* 4th Card: Selective Access to Husain Sir's Jamali Classes */}
+                    {hasJamaliAccess && (
+                        <div className="dashboard-card jamali-dashboard-card" onClick={() => navigate('/jamali-classes')}>
+                            <div className="jamali-card-header">
+                                <img src={jamaliLogo} alt="Husain Sir's Jamali Classes" className="jamali-card-logo" />
+                                <span className="jamali-card-badge">Selective Access</span>
+                            </div>
+                            <h3>Husain Sir's Jamali Classes</h3>
+                            <p>Launch the exclusive Jamali Classes portal with custom UI & specialized learning environment.</p>
+                            <div className="jamali-card-action">
+                                <span>Open Portal (Website inside Website)</span>
+                                <ExternalLink size={16} />
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 <HomeCarousel />

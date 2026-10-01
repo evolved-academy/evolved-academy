@@ -7,6 +7,8 @@ import SEO from '../components/SEO';
 import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+import { getStudentUnlockedCourses } from '../utils/accessControl';
+
 const MyCoursesPage = () => {
     const { user } = useAuth();
     const [enrolledCourses, setEnrolledCourses] = useState([]);
@@ -14,24 +16,12 @@ const MyCoursesPage = () => {
 
     useEffect(() => {
         const fetchEnrolledCourses = async () => {
-            if (!user?.email) return;
+            if (!user) return;
 
             try {
-                const username = user.username || (user.email ? user.email.split('@')[0] : '');
-                const emailQuery = user.email ? `email.ilike.${user.email}` : '';
-                const usernameQuery = username ? `email.ilike.${username}` : '';
-                const orCondition = [emailQuery, usernameQuery].filter(Boolean).join(',');
-
-                const { data, error } = await supabase
-                    .from('student_access')
-                    .select('course_code')
-                    .or(orCondition);
-
-                if (data) {
-                    const codes = data.map(item => item.course_code);
-                    const userCourses = paidCourses.filter(course => codes.includes(course.code));
-                    setEnrolledCourses(userCourses);
-                }
+                const codes = await getStudentUnlockedCourses(user);
+                const userCourses = paidCourses.filter(course => codes.includes(course.code));
+                setEnrolledCourses(userCourses);
             } catch (error) {
                 console.error('Error fetching courses:', error);
             } finally {

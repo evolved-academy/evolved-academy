@@ -23,6 +23,7 @@ const MyCoursesPage = React.lazy(() => import('./pages/MyCoursesPage'));
 const AboutUsPage = React.lazy(() => import('./pages/AboutUsPage'));
 const LegalPage = React.lazy(() => import('./pages/LegalPage'));
 const UpdatePasswordPage = React.lazy(() => import('./pages/UpdatePasswordPage'));
+const JamaliClassesPage = React.lazy(() => import('./pages/JamaliClassesPage'));
 
 // Protected Route Component
 const ProtectedRoute = ({ children, requireHost }) => {
@@ -123,6 +124,11 @@ function App() {
                   <Route path="/my-courses" element={
                     <ProtectedRoute>
                       <MyCoursesPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/jamali-classes" element={
+                    <ProtectedRoute>
+                      <JamaliClassesPage />
                     </ProtectedRoute>
                   } />
 
